@@ -1,11 +1,11 @@
 import { useForm } from 'react-hook-form';
 import { Stack } from '@mui/material';
-import { formtypes } from '../../constants/formTypes';
+import { FormTypes } from '../../constants/FormTypes';
 import Button from './Button';
 import InputField from './InputField';
 
 const Form = ({ type, onSubmit }) => {
-  const formConfig = formtypes[type];
+  const formConfig = FormTypes[type];
 
   const {
     register,
