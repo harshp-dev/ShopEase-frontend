@@ -1,8 +1,11 @@
-// Here goes the button reusable component
-import React from 'react';
+import { Button as MuiButton } from '@mui/material';
 
-const Button = () => {
-  return <div>Button</div>;
+const Button = ({ label, variant = 'contained', onClick, type = 'button', disabled = false }) => {
+  return (
+    <MuiButton variant={variant} type={type} onClick={onClick} disabled={disabled}>
+      {label}
+    </MuiButton>
+  );
 };
 
 export default Button;
