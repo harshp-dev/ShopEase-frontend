@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import UserDashboard from '../pages/user/UserDashboard';
