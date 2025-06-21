@@ -38,4 +38,13 @@ export const FormTypes = {
       },
     ],
   },
+  forgot: {
+    fields: [
+      {
+        name: 'email',
+        label: 'Email',
+        type: 'email',
+      },
+    ],
+  },
 };
