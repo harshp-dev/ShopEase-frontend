@@ -46,8 +46,8 @@ export const FormTypes = {
         type: 'password',
       },
       {
-        name: 'confirmPassword',
-        label: 'Confirm NewP assword',
+        name: 'confirmNewPassword',
+        label: 'Confirm New Password',
         type: 'password',
       },
     ],
