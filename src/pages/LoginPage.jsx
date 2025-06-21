@@ -8,7 +8,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isAdminLogin = location.pathname === '/adminlogin';
+  const isAdminLogin = location.pathname === '/admin/login';
 
   const handleLogin = async (data) => {
     try {

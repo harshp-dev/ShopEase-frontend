@@ -1,9 +1,5 @@
-import axios from 'axios';
 import { endpoints } from '../constants/endpoints';
-
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api',
-});
+import api from '../api/api';
 
 export const loginUser = async (data) => {
   try {

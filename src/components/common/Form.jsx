@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { FormTypes } from '../../constants/formTypes'
+import { FormTypes } from '../../constants/formTypes';
 import Button from './Button';
 import InputField from './InputField';
 
