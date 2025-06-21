@@ -1,22 +1,22 @@
-import { useForm } from 'react-hook-form';
 import { Stack } from '@mui/material';
-import { FormTypes } from '../../constants/FormTypes';
+import { useForm } from 'react-hook-form';
+import { FormTypes } from '../../constants/formTypes'
 import Button from './Button';
 import InputField from './InputField';
 
 const Form = ({ type, onSubmit }) => {
   const formConfig = FormTypes[type];
-
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm();
 
   const handleFormSubmit = (data) => {
     console.log(`${type} form submitted`, data);
     if (onSubmit) {
-      onSubmit(data);
+      onSubmit(data, setError);
     }
   };
 

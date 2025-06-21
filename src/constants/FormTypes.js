@@ -69,6 +69,15 @@ export const FormTypes = {
         name: 'confirmNewPassword',
         label: 'Confirm New Password',
         type: 'password',
+			},
+		]
+	},
+  forgot: {
+    fields: [
+      {
+        name: 'email',
+        label: 'Email',
+        type: 'email',
       },
     ],
   },
