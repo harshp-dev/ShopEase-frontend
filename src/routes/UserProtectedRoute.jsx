@@ -2,14 +2,14 @@
 // import { useSelector } from 'react-redux';
 // import { Navigate, Outlet } from 'react-router-dom';
 
-// const ProtectedRoute = () => {
+// const UserProtectedRoute = () => {
 //   const { user } = useSelector((state) => state.auth);
 
-//   if (!user) {
+//  if (!user || user.role !== 'user') {
 //     return <Navigate to="/login" replace />;
 //   }
 
 //   return <Outlet />;
 // };
 
-// export default ProtectedRoute;
+// export default UserProtectedRoute;

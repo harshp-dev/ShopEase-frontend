@@ -32,9 +32,52 @@ export const FormTypes = {
         type: 'password',
       },
       {
-        name: 'confirmpassword',
+        name: 'confirmPassword',
         label: 'ConfirmPassword',
         type: 'password',
+      },
+    ],
+  },
+  resetPassword: {
+    fields: [
+      {
+        name: 'newPassword',
+        label: 'New Password',
+        type: 'password',
+      },
+      {
+        name: 'confirmNewPassword',
+        label: 'Confirm New Password',
+        type: 'password',
+      },
+    ],
+  },
+
+  changePassword: {
+    fields: [
+      {
+        name: 'currentPassword',
+        label: 'Current Password',
+        type: 'password',
+      },
+      {
+        name: 'newPassword',
+        label: 'New Password',
+        type: 'password',
+      },
+      {
+        name: 'confirmNewPassword',
+        label: 'Confirm New Password',
+        type: 'password',
+      },
+    ],
+  },
+  forgot: {
+    fields: [
+      {
+        name: 'email',
+        label: 'Email',
+        type: 'email',
       },
     ],
   },
