@@ -8,7 +8,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isAdminLogin = location.pathname === '/adminlogin';
+  const isAdminLogin = location.pathname === '/admin/login';
 
   const handleLogin = async (data) => {
     try {
@@ -19,7 +19,7 @@ const Login = () => {
         navigate('/user');
       }
     } catch (error) {
-      alert(error.message || 'Login failed');
+      console.log('Login error:', error);
     }
   };
 

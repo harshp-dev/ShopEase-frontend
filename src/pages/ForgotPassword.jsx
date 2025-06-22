@@ -10,16 +10,15 @@ const ForgotPassword = () => {
   const handleForgot = async (data) => {
     try {
       await forgotPassword(data);
-      alert('Password reset link sent to your email!');
       navigate('/login');
     } catch (error) {
-      alert(error.message || 'Something went wrong');
+      console.log('Forgot password error:', error);
     }
   };
 
   return (
     <AuthCard title="Forgot Password" subtitle="Enter your email to reset your password">
-      <Form type="forgot" onSubmit={handleForgot} />
+      <Form type="forgotPassword" onSubmit={handleForgot} />
     </AuthCard>
   );
 };
