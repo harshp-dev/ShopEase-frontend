@@ -16,7 +16,7 @@ export const registerSchema = yup.object({
 });
 
 export const loginSchema = yup.object({
-  email: yup.string().trim().required('Email is required'),
+  username: yup.string().trim().required('Username is required'),
   password: yup.string().trim().required('Password is required'),
 });
 
@@ -37,7 +37,7 @@ export const resetPasswordSchema = yup.object({
     .required('Confirm password is required'),
 });
 
-export const changePassword = yup.object({
+export const changePasswordSchema = yup.object({
   currentPassword: yup.string().trim().required('Password is required'),
   newPassword: yup
     .string()
