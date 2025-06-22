@@ -7,20 +7,12 @@ import { registerUser } from '../services/AuthService';
 const Register = () => {
   const navigate = useNavigate();
 
-  const handleRegister = async (data, setError) => {
-    if (data.password !== data.confirmpassword) {
-      setError('confirmpassword', {
-        type: 'manual',
-        message: 'Passwords do not match',
-      });
-      return;
-    }
-
+  const handleRegister = async (data) => {
     try {
       await registerUser(data);
       navigate('/login');
     } catch (error) {
-      alert(error.message || 'Registration failed');
+      console.log('Registration error:', error);
     }
   };
 

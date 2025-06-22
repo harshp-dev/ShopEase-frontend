@@ -19,7 +19,7 @@ const Login = () => {
         navigate('/user');
       }
     } catch (error) {
-      alert(error.message || 'Login failed');
+      console.log('Login error:', error);
     }
   };
 
