@@ -1,4 +1,5 @@
 import { Box, Typography, Button, AppBar, Toolbar, Container, Grid } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
   return (
@@ -52,6 +53,8 @@ const LandingPage = () => {
           <Grid item>
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Button
+                component={Link}
+                to="/register"
                 sx={{
                   fontSize: '1rem',
                   backgroundColor: 'white',
@@ -70,6 +73,8 @@ const LandingPage = () => {
                 Start Shopping
               </Button>
               <Button
+                component={Link}
+                to="/login"
                 sx={{
                   fontSize: '1rem',
                   backgroundColor: 'white',
