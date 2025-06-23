@@ -54,7 +54,7 @@ const LandingPage = () => {
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Button
                 component={Link}
-                to="/register"
+                to="/login"
                 sx={{
                   fontSize: '1rem',
                   backgroundColor: 'white',
@@ -74,7 +74,7 @@ const LandingPage = () => {
               </Button>
               <Button
                 component={Link}
-                to="/login"
+                to="/register"
                 sx={{
                   fontSize: '1rem',
                   backgroundColor: 'white',
