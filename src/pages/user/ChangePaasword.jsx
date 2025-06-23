@@ -15,7 +15,6 @@ const ChangePassword = () => {
       showErrorToast(error.message || 'Failed to change your password');
     }
   };
-
   return (
     <AuthCard title="Change Your Password" subtitle="Please enter your new password below.">
       <Form
