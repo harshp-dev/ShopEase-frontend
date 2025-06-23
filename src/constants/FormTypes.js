@@ -1,10 +1,18 @@
+import {
+  registerSchema,
+  loginSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
+  changePasswordSchema,
+} from '../schema/authSchema';
+
 export const FormTypes = {
   login: {
     fields: [
       {
-        name: 'email',
-        label: 'Email',
-        type: 'email',
+        name: 'username',
+        label: 'Username',
+        type: 'text',
       },
       {
         name: 'password',
@@ -12,6 +20,8 @@ export const FormTypes = {
         type: 'password',
       },
     ],
+    Schema: loginSchema,
+    submitButtonLabel: 'Login',
   },
 
   register: {
@@ -37,6 +47,8 @@ export const FormTypes = {
         type: 'password',
       },
     ],
+    Schema: registerSchema,
+    submitButtonLabel: 'Register',
   },
   resetPassword: {
     fields: [
@@ -51,6 +63,8 @@ export const FormTypes = {
         type: 'password',
       },
     ],
+    Schema: resetPasswordSchema,
+    submitButtonLabel: 'Reset Password',
   },
 
   changePassword: {
@@ -71,8 +85,10 @@ export const FormTypes = {
         type: 'password',
       },
     ],
+    Schema: changePasswordSchema,
+    submitButtonLabel: 'Change Password',
   },
-  forgot: {
+  forgotPassword: {
     fields: [
       {
         name: 'email',
@@ -80,5 +96,7 @@ export const FormTypes = {
         type: 'email',
       },
     ],
+    Schema: forgotPasswordSchema,
+    submitButtonLabel: 'Send Reset Password Link',
   },
 };
