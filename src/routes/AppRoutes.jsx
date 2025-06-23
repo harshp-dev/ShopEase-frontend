@@ -7,20 +7,22 @@ import UserDashboard from '../pages/user/UserDashboard';
 import ForgotPassword from '../pages/ForgotPassword';
 import ChangePassword from '../pages/user/ChangePaasword';
 import ResetPassword from '../pages/user/ResetPassword';
+import LandingPage from '../pages/LandingPage';
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/login" element={<Login />}></Route>
-      <Route path="/admin/login" element={<Login />}></Route>
-      <Route path="/register" element={<Register />}></Route>
-      <Route path="/admin" element={<AdminDashboard />}></Route>
-      <Route path="/user" element={<UserDashboard />}></Route>
-      <Route path="/reset-password/:token" element={<ResetPassword />}></Route>
-      <Route path="/change-password" element={<ChangePassword />}></Route>
-      <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/admin/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/admin" element={<AdminDashboard />} />
+      <Route path="/user" element={<UserDashboard />} />
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
+      <Route path="/change-password" element={<ChangePassword />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       {/* <Route element={<ProtectedRoute />}> */}
-      <Route path="/admin" element={<AdminDashboard />}></Route>
+      <Route path="/admin" element={<AdminDashboard />} />
       {/* </Route> */}
     </Routes>
   );
