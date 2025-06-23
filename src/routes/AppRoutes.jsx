@@ -16,7 +16,7 @@ const AppRoutes = () => {
       <Route path="/register" element={<Register />}></Route>
       <Route path="/admin" element={<AdminDashboard />}></Route>
       <Route path="/user" element={<UserDashboard />}></Route>
-      <Route path="/reset-password" element={<ResetPassword />}></Route>
+      <Route path="/reset-password/:token" element={<ResetPassword />}></Route>
       <Route path="/change-password" element={<ChangePassword />}></Route>
       <Route path="/forgot-password" element={<ForgotPassword />}></Route>
       {/* <Route element={<ProtectedRoute />}> */}
