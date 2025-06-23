@@ -62,7 +62,6 @@ export const changePassword = async (data) => {
     const payload = {
       oldPassword: data.currentPassword,
       newPassword: data.newPassword,
-      confirmNewPassword: data.confirmNewPassword,
     };
 
     const res = await api.post(endpoints.AUTH.CHANGE_PASSWORD_ENDPOINT, payload);

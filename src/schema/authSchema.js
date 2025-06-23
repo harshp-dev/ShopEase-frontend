@@ -1,13 +1,17 @@
 import * as yup from 'yup';
+import { passwordRegex } from '../constants/constants';
 
 export const registerSchema = yup.object({
   username: yup.string().trim().required('Username is required'),
   email: yup.string().trim().email('Invalid email').required('Email is required'),
   password: yup
     .string()
-    .trim()
+    .required('password is required')
     .min(6, 'Password must be at least 6 characters')
-    .required('Password is required'),
+    .matches(passwordRegex.lowercase, 'Password must include lowercase character')
+    .matches(passwordRegex.uppercase, 'Password must include uppercase character')
+    .matches(passwordRegex.number, 'Password must include number character')
+    .matches(passwordRegex.special, 'Password must include special character'),
   confirmPassword: yup
     .string()
     .trim()
@@ -27,9 +31,12 @@ export const forgotPasswordSchema = yup.object({
 export const resetPasswordSchema = yup.object({
   newPassword: yup
     .string()
-    .trim()
+    .required('New password is required')
     .min(6, 'Password must be at least 6 characters')
-    .required('Password is required'),
+    .matches(passwordRegex.lowercase, 'Password must include lowercase character')
+    .matches(passwordRegex.uppercase, 'Password must include uppercase character')
+    .matches(passwordRegex.number, 'Password must include number character')
+    .matches(passwordRegex.special, 'Password must include special character'),
   confirmNewPassword: yup
     .string()
     .trim()
@@ -41,9 +48,12 @@ export const changePasswordSchema = yup.object({
   currentPassword: yup.string().trim().required('Password is required'),
   newPassword: yup
     .string()
-    .trim()
+    .required('New password is required')
     .min(6, 'Password must be at least 6 characters')
-    .required('Password is required'),
+    .matches(passwordRegex.lowercase, 'Password must include lowercase character')
+    .matches(passwordRegex.uppercase, 'Password must include uppercase character')
+    .matches(passwordRegex.number, 'Password must include number character')
+    .matches(passwordRegex.special, 'Password must include special character'),
   confirmNewPassword: yup
     .string()
     .trim()
