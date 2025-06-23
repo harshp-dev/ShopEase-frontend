@@ -50,7 +50,13 @@ export const forgotPassword = async (data) => {
 
 export const changePassword = async (data) => {
   try {
-    const res = await api.post(endpoints.AUTH.CHANGE_PASSWORD_ENDPOINT, data);
+    const payload = {
+      oldPassword: data.currentPassword,
+      newPassword: data.newPassword,
+      confirmNewPassword: data.confirmNewPassword,
+    };
+
+    const res = await api.post(endpoints.AUTH.CHANGE_PASSWORD_ENDPOINT, payload);
     showSuccessToast('Password changed successfully!');
     return res.data;
   } catch (error) {
@@ -60,7 +66,11 @@ export const changePassword = async (data) => {
 
 export const resetPassword = async (token, data) => {
   try {
-    const res = await api.post(endpoints.AUTH.RESET_PASSWORD_ENDPOINT(token), data);
+    const payload = {
+      password: data.newPassword,
+      confirmPassword: data.confirmNewPassword,
+    };
+    const res = await api.post(`${endpoints.AUTH.RESET_PASSWORD_ENDPOINT}/${token}`, payload);
     showSuccessToast('Password reset successfully!');
     return res.data;
   } catch (error) {

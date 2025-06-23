@@ -10,7 +10,7 @@ const ChangePassword = () => {
   const handleChangePassword = async (data) => {
     try {
       await changePassword(data);
-      navigate('/');
+      navigate('/user');
     } catch (error) {
       showErrorToast(error.message || 'Failed to change your password');
     }
