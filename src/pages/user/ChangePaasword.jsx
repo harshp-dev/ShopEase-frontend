@@ -1,16 +1,22 @@
 import { useNavigate } from 'react-router-dom';
 import AuthCard from './../../components/common/AuthCard';
 import Form from './../../components/common/Form';
+import { changePassword } from '../../services/AuthService';
+import { showErrorToast, showSuccessToast } from '../../Utils/ToastUtils';
 
 const ChangePassword = () => {
   const navigate = useNavigate();
 
-  const handleChangePassword = (e) => {
-    e.preventDefault();
-    //Yup schema for password validations
-    //success and error toast messages
-    navigate('/');
+  const handleChangePassword = async (data) => {
+    try {
+      await changePassword(data);
+      showSuccessToast('Password changed successfully!');
+      navigate('/');
+    } catch (error) {
+      showErrorToast(error.message || 'Failed to change your password');
+    }
   };
+
   return (
     <AuthCard title="Change Your Password" subtitle="Please enter your new password below.">
       <Form
