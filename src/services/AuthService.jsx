@@ -77,7 +77,6 @@ export const resetPassword = async (token, data) => {
   try {
     const payload = {
       password: data.newPassword,
-      confirmPassword: data.confirmNewPassword,
     };
     const res = await api.post(`${endpoints.AUTH.RESET_PASSWORD_ENDPOINT}/${token}`, payload);
     showSuccessToast('Password reset successfully!');
