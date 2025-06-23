@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthCard from './../../components/common/AuthCard';
 import Form from './../../components/common/Form';
 import { changePassword } from '../../services/AuthService';
-import { showErrorToast, showSuccessToast } from '../../Utils/ToastUtils';
+import { showErrorToast } from '../../Utils/ToastUtils';
 
 const ChangePassword = () => {
   const navigate = useNavigate();
@@ -10,7 +10,6 @@ const ChangePassword = () => {
   const handleChangePassword = async (data) => {
     try {
       await changePassword(data);
-      showSuccessToast('Password changed successfully!');
       navigate('/');
     } catch (error) {
       showErrorToast(error.message || 'Failed to change your password');

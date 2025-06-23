@@ -3,20 +3,22 @@ import { useForm } from 'react-hook-form';
 import { FormTypes } from '../../constants/formTypes';
 import Button from './Button';
 import InputField from './InputField';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const Form = ({ type, onSubmit }) => {
   const formConfig = FormTypes[type];
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(formConfig.Schema),
+  });
 
   const handleFormSubmit = (data) => {
     console.log(`${type} form submitted`, data);
     if (onSubmit) {
-      onSubmit(data, setError);
+      onSubmit(data);
     }
   };
 
@@ -35,7 +37,7 @@ const Form = ({ type, onSubmit }) => {
             helperText={errors[field.name]?.message}
           />
         ))}
-        <Button type="submit" label="Submit" />
+        <Button type="submit" label={formConfig.submitButtonLabel} />
       </Stack>
     </form>
   );
