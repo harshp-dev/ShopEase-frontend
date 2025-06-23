@@ -47,3 +47,23 @@ export const forgotPassword = async (data) => {
     handleError(error);
   }
 };
+
+export const changePassword = async (data) => {
+  try {
+    const res = await api.post(endpoints.AUTH.CHANGE_PASSWORD_ENDPOINT, data);
+    showSuccessToast('Password changed successfully!');
+    return res.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const resetPassword = async (token, data) => {
+  try {
+    const res = await api.post(endpoints.AUTH.RESET_PASSWORD_ENDPOINT(token), data);
+    showSuccessToast('Password reset successfully!');
+    return res.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
