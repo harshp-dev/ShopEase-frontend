@@ -7,6 +7,7 @@ import UserDashboard from '../pages/user/UserDashboard';
 import ForgotPassword from '../pages/ForgotPassword';
 import ChangePassword from '../pages/user/ChangePaasword';
 import ResetPassword from '../pages/user/ResetPassword';
+import AddProductPage from '../pages/AddProduct';
 
 const AppRoutes = () => {
   return (
@@ -21,6 +22,8 @@ const AppRoutes = () => {
       <Route path="/forgot-password" element={<ForgotPassword />}></Route>
       {/* <Route element={<ProtectedRoute />}> */}
       <Route path="/admin" element={<AdminDashboard />}></Route>
+
+      <Route path="modal" element={<AddProductPage />} />
       {/* </Route> */}
     </Routes>
   );
