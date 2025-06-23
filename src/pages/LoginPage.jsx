@@ -3,7 +3,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import AuthCard from '../components/common/AuthCard';
 import Form from '../components/common/Form';
 import { loginUser, loginAdmin } from '../services/AuthService';
-
+// Login component goes here
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
