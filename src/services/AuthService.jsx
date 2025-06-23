@@ -30,7 +30,12 @@ export const loginAdmin = async (data) => {
 };
 export const registerUser = async (data) => {
   try {
-    const response = await api.post(endpoints.AUTH.REGISTER_ENDPOINT, data);
+    const payload = {
+      username: data.username,
+      email: data.email,
+      password: data.password,
+    };
+    const response = await api.post(endpoints.AUTH.REGISTER_ENDPOINT, payload);
     showSuccessToast('Registration successful! Please log in.');
     return response.data;
   } catch (error) {
