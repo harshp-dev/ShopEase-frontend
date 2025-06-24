@@ -34,23 +34,11 @@ const DataTable = ({ columns = [], rows = [], onEdit, onDelete, loading = false 
       );
     }
 
-    if (col.field === 'image') {
+    if (col.field === 'image' || col.field === 'images') {
       return (
         <img
           src={row.image}
           alt={row.name || 'Image'}
-          width={50}
-          height={50}
-          style={{ borderRadius: '4px', objectFit: 'cover' }}
-        />
-      );
-    }
-
-    if (col.field === 'images') {
-      return (
-        <img
-          src={row.images?.[0]}
-          alt="product"
           width={50}
           height={50}
           style={{ borderRadius: '4px', objectFit: 'cover' }}
