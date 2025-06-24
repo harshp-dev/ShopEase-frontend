@@ -4,7 +4,7 @@ import { roles } from '../constants/constants';
 
 const AdminProtectedRoute = () => {
   const { user } = useSelector((state) => state.auth);
-
+  console.log('User', user);
   if (!user || user.role !== roles.ADMIN) {
     return <Navigate to="/admin/login" replace />;
   }
