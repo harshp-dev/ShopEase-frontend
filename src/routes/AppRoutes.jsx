@@ -8,6 +8,7 @@ import ForgotPassword from '../pages/ForgotPassword';
 import ChangePassword from '../pages/user/ChangePaasword';
 import ResetPassword from '../pages/user/ResetPassword';
 import LandingPage from '../pages/LandingPage';
+import ProductDetails from '../pages/product/ProductDetail';
 
 const AppRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const AppRoutes = () => {
       {/* <Route element={<ProtectedRoute />}> */}
       <Route path="/admin" element={<AdminDashboard />} />
       {/* </Route> */}
+      <Route path="/product/:id" element={<ProductDetails />} />
     </Routes>
   );
 };
