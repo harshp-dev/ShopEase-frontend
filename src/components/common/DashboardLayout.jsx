@@ -1,4 +1,4 @@
-import Navbar from '../components/common/Navbar';
+import Navbar from './Navbar';
 import { Box, Container } from '@mui/material';
 
 const DashboardLayout = ({ children }) => {
