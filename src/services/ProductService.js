@@ -17,6 +17,18 @@ export const getProductById = async (id) => {
   }
 };
 
+export const getProducts = async ({ category = null, page, limit, search }) => {
+  try {
+    const response = await api.get(endpoints.PRODUCT.GET_PRODUCTS, {
+      params: { category, page, limit, search },
+    });
+    return response.data;
+  } catch (error) {
+    handleError(error);
+    throw error;
+  }
+};
+
 export const addToCart = async (productId, quantity = 1) => {
   try {
     // TODO: Replace with real API call when backend is ready
