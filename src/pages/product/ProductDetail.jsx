@@ -1,7 +1,6 @@
-// src/pages/ProductDetailPage.jsx
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Container, Grid, Box, Alert, Button } from '@mui/material';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Container, Grid, Card, CardContent, Alert, Button, Fade, Box } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { getProductById } from '../../services/ProductService';
 import ProductPhotos from '../../components/Product/ProductPhotos';
@@ -10,6 +9,7 @@ import LoadingSpinner from '../../components/common/LoadingSpinner';
 
 const ProductDetailPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -33,96 +33,90 @@ const ProductDetailPage = () => {
     }
   }, [id]);
 
-  const containerStyles = {
-    py: { xs: 2, sm: 4 },
-    px: { xs: 1, sm: 2 },
-  };
-
-  const backButtonStyles = {
-    mb: 3,
-    textTransform: 'none',
-    color: 'text.secondary',
-    '&:hover': {
-      bgcolor: 'grey.100',
-    },
-  };
-
-  const gridContainerStyles = {
-    spacing: { xs: 3, sm: 4 },
-    alignItems: 'flex-start',
-  };
-
   if (loading) {
     return <LoadingSpinner message="Loading product details..." />;
   }
 
   if (error) {
     return (
-      <Container maxWidth="lg" sx={containerStyles}>
-        <Alert
-          severity="error"
-          sx={{
-            mb: 2,
-            '& . MuiAlert-message': {
-              fontSize: '1.1rem',
-            },
-          }}
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Button
+          onClick={() => navigate('/products')}
+          startIcon={<ArrowBack />}
+          sx={{ mb: 3, textTransform: 'none' }}
         >
+          Back to Products
+        </Button>
+        <Alert severity="error" sx={{ borderRadius: 2 }}>
           {error}
         </Alert>
-        <Button
-          variant="outlined"
-          onClick={() => window.history.back()}
-          startIcon={<ArrowBack />}
-          sx={backButtonStyles}
-        >
-          Go Back
-        </Button>
       </Container>
     );
   }
 
   if (!product) {
     return (
-      <Container maxWidth="lg" sx={containerStyles}>
-        <Alert severity="info" sx={{ mb: 2 }}>
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Button
+          onClick={() => navigate('/products')}
+          startIcon={<ArrowBack />}
+          sx={{ mb: 3, textTransform: 'none' }}
+        >
+          Back to Products
+        </Button>
+        <Alert severity="info" sx={{ borderRadius: 2 }}>
           Product not found
         </Alert>
-        <Button
-          variant="outlined"
-          onClick={() => window.history.back()}
-          startIcon={<ArrowBack />}
-          sx={backButtonStyles}
-        >
-          Go Back
-        </Button>
       </Container>
     );
   }
 
   return (
-    <Container maxWidth="lg" sx={containerStyles}>
-      {/* Back Button */}
+    <Container maxWidth="lg" sx={{ py: 4 }}>
       <Button
-        variant="text"
-        onClick={() => window.history.back()}
+        onClick={() => navigate('/products')}
         startIcon={<ArrowBack />}
-        sx={backButtonStyles}
+        sx={{ mb: 3, textTransform: 'none' }}
       >
         Back to Products
       </Button>
 
-      {/* Main Content */}
-      <Grid container sx={gridContainerStyles}>
-        <Grid item xs={12} md={6}>
-          <ProductPhotos images={product.images} productName={product.name} />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Box sx={{ position: 'sticky', top: 20 }}>
-            <ProductInfo product={product} />
-          </Box>
-        </Grid>
-      </Grid>
+      <Fade in={true} timeout={500}>
+        <Card
+          elevation={3}
+          sx={{
+            borderRadius: 3,
+            overflow: 'hidden',
+            maxWidth: 1200,
+            mx: 'auto',
+          }}
+        >
+          <CardContent sx={{ p: { xs: 2, sm: 4 } }}>
+            <Grid container spacing={{ xs: 2, md: 4 }} alignItems="stretch" justifyContent="center">
+              <Grid item xs={12} sm={12} md={6}>
+                <Box height="100%" display="flex" flexDirection="column" justifyContent="center">
+                  <ProductPhotos images={product.images} productName={product.name} />
+                </Box>
+              </Grid>
+
+              <Grid item xs={12} sm={12}>
+                <Box
+                  height="100%"
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="space-between"
+                  sx={{
+                    px: { xs: 0, sm: 2 },
+                    maxWidth: { md: '100%' },
+                  }}
+                >
+                  <ProductInfo product={product} />
+                </Box>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+      </Fade>
     </Container>
   );
 };
