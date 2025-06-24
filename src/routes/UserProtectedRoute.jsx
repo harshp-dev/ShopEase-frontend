@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
-import { roles } from '../constants/roles';
+import { roles } from '../constants/constants';
 
 const UserProtectedRoute = () => {
   const { user } = useSelector((state) => state.auth);
