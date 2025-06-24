@@ -13,11 +13,7 @@ const ChangePassword = () => {
   };
   return (
     <AuthCard title="Change Your Password" subtitle="Please enter your new password below.">
-      <Form
-        type="changePassword"
-        onSubmit={handleChangePassword}
-        submitButtonText="Change Password"
-      />
+      <Form type="changePassword" onSubmit={handleChangePassword} />
     </AuthCard>
   );
 };
