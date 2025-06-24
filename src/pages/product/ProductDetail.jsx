@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Grid, Card, CardContent, Alert, Button, Fade, Box } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
-import { getProductById } from '../../services/ProductService';
+import { getProductById } from '../../services/ProductService.js';
 import ProductPhotos from '../../components/Product/ProductPhotos';
 import ProductInfo from '../../components/Product/ProductInfo';
 import LoadingSpinner from '../../components/common/LoadingSpinner';

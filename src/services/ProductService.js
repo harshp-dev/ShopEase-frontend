@@ -1,4 +1,4 @@
-import { showSuccessToast, showErrorToast } from '../Utils/ToastUtils';
+import { showSuccessToast, showErrorToast } from '../Utils/ToastUtils.jsx';
 import api from '../api/api.js';
 import { endpoints } from '../constants/endpoints.js';
 
