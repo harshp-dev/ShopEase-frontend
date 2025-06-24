@@ -6,6 +6,6 @@ export const passwordRegex = {
 };
 
 export const roles = {
-  USER: 'user',
-  ADMIN: 'admin',
+  USER: 'USER',
+  ADMIN: 'ADMIN',
 };
