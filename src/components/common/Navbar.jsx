@@ -76,8 +76,7 @@ const Navbar = () => {
               {name}
             </Button>
           ))}
-
-          {user?.role === 'ADMIN' && (
+          {user && (
             <>
               <IconButton color="inherit" onClick={handleMenuOpen}>
                 <AccountCircleIcon />
