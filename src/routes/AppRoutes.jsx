@@ -18,6 +18,7 @@ import OrdersPage from '../pages/user/OrdersPage';
 import CartPage from '../pages/user/CartPage';
 import UserLayout from '../pages/user/UserLayout';
 import RestrictedRoute from './RestrictedRoute';
+import ProductDetails from '../pages/product/ProductDetail';
 
 const AppRoutes = () => {
   return (
@@ -50,6 +51,11 @@ const AppRoutes = () => {
           <Route path="cart" element={<CartPage />} />
         </Route>
       </Route>
+      {/* <Route element={<ProtectedRoute />}> */}
+      <Route path="/admin" element={<AdminDashboard />} />
+
+      {/* </Route> */}
+      <Route path="/product/:id" element={<ProductDetails />} />
     </Routes>
   );
 };
