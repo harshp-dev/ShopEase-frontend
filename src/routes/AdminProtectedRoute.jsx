@@ -1,15 +1,15 @@
-// import React from 'react';
-// import { useSelector } from 'react-redux';
-// import { Navigate, Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Navigate, Outlet } from 'react-router-dom';
+import { roles } from '../constants/roles';
 
-// const AdminProtectedRoute = () => {
-//   const { user } = useSelector((state) => state.auth);
+const AdminProtectedRoute = () => {
+  const { user } = useSelector((state) => state.auth);
 
-//   if (!user || user.role !== 'admin') {
-//     return <Navigate to="/admin/login" replace />;
-//   }
+  if (!user || user.role !== roles.ADMIN) {
+    return <Navigate to="/admin/login" replace />;
+  }
 
-//   return <Outlet />;
-// };
+  return <Outlet />;
+};
 
-// export default AdminProtectedRoute;
+export default AdminProtectedRoute;

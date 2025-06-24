@@ -4,3 +4,8 @@ export const passwordRegex = {
   number: /\d/,
   special: /[\W_]/,
 };
+
+export const roles = {
+  USER: 'user',
+  ADMIN: 'admin',
+};
