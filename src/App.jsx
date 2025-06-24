@@ -21,7 +21,7 @@ const App = () => {
     };
 
     initializeUser();
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

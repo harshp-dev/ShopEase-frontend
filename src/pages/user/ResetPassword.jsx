@@ -17,12 +17,7 @@ const ResetPassword = () => {
   };
   return (
     <AuthCard title="Reset Your Password" subtitle="Please enter your new password below.">
-      <Form
-        type="resetPassword"
-        onSubmit={handleResetPassword}
-        submitButtonText="Reset Password"
-        token={token}
-      />
+      <Form type="resetPassword" onSubmit={handleResetPassword} />
     </AuthCard>
   );
 };
