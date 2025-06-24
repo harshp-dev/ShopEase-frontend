@@ -1,16 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
+import { getCategories } from '../../services/CategoryService';
 export const fetchCategories = createAsyncThunk(
   'category/fetchCategories',
   async ({ page = 1, limit = 10, search = '' }, thunkAPI) => {
     try {
-      const res = await axios.get('/api/category', {
-        params: { page, limit, search },
-      });
-      return res.data;
+      return await getCategories({ page, limit, search });
     } catch (err) {
-      return thunkAPI.rejectWithValue(err.response?.data?.message || 'Something went wrong');
+      return thunkAPI.rejectWithValue(err.response?.data?.message || 'Failed to fetch categories');
     }
   },
 );

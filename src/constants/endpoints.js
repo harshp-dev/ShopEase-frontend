@@ -11,6 +11,6 @@ export const endpoints = {
     ME_ENDPOINT: 'auth/me',
   },
   CATEGORY: {
-    GET_CATEGORIES: '/category',
+    GET_ALL_CATEGORIES: '/category',
   },
 };
