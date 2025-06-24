@@ -10,6 +10,9 @@ export const endpoints = {
     LOGOUT_ENDPOINT: '/auth/logout',
     ME_ENDPOINT: 'auth/me',
   },
+  CATEGORY: {
+    GET_ALL_CATEGORIES: '/category',
+  },
   PRODUCT: {
     GET_PRODUCT_BY_ID_ENDPOINT: '/products',
   },
