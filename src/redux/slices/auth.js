@@ -10,7 +10,6 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (state, action) => {
       state.user = action.payload.user;
-      console.log('auth.js file mathi ', state.user);
       state.token = true;
     },
     logout: (state) => {

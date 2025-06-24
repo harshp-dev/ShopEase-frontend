@@ -10,4 +10,7 @@ export const endpoints = {
     LOGOUT_ENDPOINT: '/auth/logout',
     ME_ENDPOINT: 'auth/me',
   },
+  CATEGORY: {
+    GET_CATEGORIES: '/category',
+  },
 };
