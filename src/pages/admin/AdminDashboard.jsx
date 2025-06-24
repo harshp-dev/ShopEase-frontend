@@ -3,7 +3,6 @@ import { logoutUser } from '../../services/AuthService';
 import { logout } from '../../redux/slices/auth';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
