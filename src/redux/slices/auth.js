@@ -1,11 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
+import { getUser } from '../../services/AuthService';
+
+export const fetchMe = createAsyncThunk('auth/fetchMe', async (_, thunkAPI) => {
+  try {
+    const user = await getUser();
+    return user;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message || 'Failed to fetch user');
+  }
+});
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
     user: null,
-    token: !!Cookies.get('accessToken') === true,
+    token: !!Cookies.get('accessToken'),
+    loading: false,
   },
   reducers: {
     setCredentials: (state, action) => {
@@ -16,6 +27,24 @@ const authSlice = createSlice({
       state.user = null;
       state.token = false;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchMe.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchMe.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.token = true;
+      })
+      .addCase(fetchMe.rejected, (state, action) => {
+        state.loading = false;
+        state.user = null;
+        state.token = false;
+        state.error = action.payload;
+      });
   },
 });
 
