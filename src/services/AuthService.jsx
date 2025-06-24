@@ -5,7 +5,6 @@ import { showSuccessToast, showErrorToast } from '../Utils/ToastUtils';
 const handleError = (error) => {
   const message = error?.response?.data?.message || error?.message || 'Something went wrong';
   showErrorToast(message);
-  throw new Error(message);
 };
 
 export const getUser = async () => {

@@ -4,6 +4,9 @@ import {
   forgotPasswordSchema,
   resetPasswordSchema,
   changePasswordSchema,
+  addProductSchema,
+  editProductSchema,
+  addCategorySchema,
 } from '../schema/authSchema';
 
 export const FormTypes = {
@@ -98,5 +101,53 @@ export const FormTypes = {
     ],
     Schema: forgotPasswordSchema,
     submitButtonLabel: 'Send Reset Password Link',
+  },
+  addProduct: {
+    fields: [
+      { name: 'name', label: 'Product Name', type: 'text' },
+      { name: 'description', label: 'Description', type: 'text' },
+      { name: 'price', label: 'Price', type: 'number' },
+      {
+        name: 'category',
+        label: 'Category',
+        type: 'select',
+        options: [
+          { value: '', label: 'Select a category' },
+          { value: 'electronics', label: 'Electronics' },
+        ],
+      },
+      { name: 'stock', label: 'Stock', type: 'number' },
+      { name: 'images', label: 'Upload Images', type: 'file' },
+    ],
+    Schema: addProductSchema,
+    submitButtonLabel: 'Add Product',
+  },
+  editProduct: {
+    fields: [
+      { name: 'name', label: 'Product Name', type: 'text' },
+      { name: 'description', label: 'Description', type: 'text' },
+      { name: 'price', label: 'Price', type: 'number' },
+      {
+        name: 'category',
+        label: 'Category',
+        type: 'select',
+        options: [
+          { value: '', label: 'Select a category' },
+          { value: 'electronics', label: 'Electronics' },
+        ],
+      },
+      { name: 'stock', label: 'Stock', type: 'number' },
+      { name: 'images', label: 'Upload Image', type: 'file' },
+    ],
+    Schema: editProductSchema,
+    submitButtonLabel: 'Update Product',
+  },
+  addCategory: {
+    fields: [
+      { name: 'name', label: 'Category Name', type: 'text' },
+      { name: 'image', label: 'Upload Image', type: 'file' },
+    ],
+    Schema: addCategorySchema,
+    submitButtonLabel: 'Add Category',
   },
 };

@@ -60,3 +60,65 @@ export const changePasswordSchema = yup.object({
     .oneOf([yup.ref('newPassword'), null], 'Passwords must match')
     .required('Confirm password is required'),
 });
+
+export const addProductSchema = yup.object({
+  name: yup.string().required('Product name is required'),
+  description: yup.string().required('Description is required'),
+  price: yup
+    .number()
+    .typeError('Price must be a number')
+    .positive('Price must be a positive number')
+    .required('Price is required'),
+  stock: yup
+    .number()
+    .typeError('Stock must be a number')
+    .min(0, 'Stock cannot be negative')
+    .required('Stock is required'),
+  images: yup
+    .mixed()
+    .required('Image files are required')
+    .test('fileType', 'Only image files are allowed', (value) => {
+      if (!value || typeof value === 'string') {
+        return false;
+      }
+      return ['image/jpeg', 'image/png'].includes(value.type);
+    }),
+});
+
+export const editProductSchema = yup.object({
+  name: yup.string().required('Product name is required'),
+  description: yup.string().required('Description is required'),
+  price: yup
+    .number()
+    .typeError('Price must be a number')
+    .positive('Price must be a positive number')
+    .required('Price is required'),
+  stock: yup
+    .number()
+    .typeError('Stock must be a number')
+    .min(0, 'Stock cannot be negative')
+    .required('Stock is required'),
+  images: yup
+    .mixed()
+    .nullable()
+    .required('Image files are required')
+    .test('fileType', 'Only image files are allowed', (value) => {
+      if (!value || typeof value === 'string') {
+        return false;
+      }
+      return ['image/jpeg', 'image/png'].includes(value.type);
+    }),
+});
+
+export const addCategorySchema = yup.object({
+  name: yup.string().required('Category name is required'),
+  image: yup
+    .mixed()
+    .required('Image files are required')
+    .test('fileType', 'Only image files are allowed', (value) => {
+      if (!value || typeof value === 'string') {
+        return false;
+      }
+      return value && ['image/jpeg', 'image/png'].includes(value.type);
+    }),
+});
