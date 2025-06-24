@@ -17,18 +17,22 @@ import ShopPage from '../pages/user/ShopPage';
 import OrdersPage from '../pages/user/OrdersPage';
 import CartPage from '../pages/user/CartPage';
 import UserLayout from '../pages/user/UserLayout';
+import RestrictedRoute from './RestrictedRoute';
+import ProductDetails from '../pages/product/ProductDetail';
 
 const AppRoutes = () => {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/admin/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/reset-password/:token" element={<ResetPassword />} />
+      <Route element={<RestrictedRoute />}>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/admin/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+      </Route>
       <Route path="/change-password" element={<ChangePassword />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
 
       <Route element={<AdminProtectedRoute />}>
         <Route path="/admin" element={<AdminLayout />}>
@@ -47,6 +51,11 @@ const AppRoutes = () => {
           <Route path="cart" element={<CartPage />} />
         </Route>
       </Route>
+      {/* <Route element={<ProtectedRoute />}> */}
+      <Route path="/admin" element={<AdminDashboard />} />
+
+      {/* </Route> */}
+      <Route path="/product/:id" element={<ProductDetails />} />
     </Routes>
   );
 };
