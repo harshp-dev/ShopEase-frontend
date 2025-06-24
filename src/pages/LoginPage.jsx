@@ -11,7 +11,8 @@ const Login = () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const isAdminLogin = location.pathname === '/admin/login';
+  const isAdminLogin =
+    location.pathname === '/admin/login' || location.pathname === '/admin/login/';
 
   const handleLogin = async (data) => {
     try {
