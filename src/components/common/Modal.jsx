@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTitle, DialogActions, Typography } from '@mui/material';
-import Form from './common/Form';
-import Button from './common/Button';
+import Form from './Form';
+import Button from './Button';
 
 const Modal = ({
   open,
@@ -13,20 +13,17 @@ const Modal = ({
   confirmButtonLabel = 'Delete',
   initialData = {},
 }) => {
+  const handleFormSubmit = (data) => {
+    onSubmit(data);
+    onClose();
+  };
   return (
     <>
       <Dialog open={open} onClose={onClose}>
         <DialogTitle> {title}</DialogTitle>
         <DialogContent>
           {mode === 'form' && (
-            <Form
-              type={type}
-              defaultValues={initialData}
-              onSubmit={(data) => {
-                onSubmit(data);
-                onClose();
-              }}
-            />
+            <Form type={type} defaultValues={initialData} onSubmit={handleFormSubmit} />
           )}
 
           {mode === 'confirm' && <Typography>{confirmMessage}</Typography>}
