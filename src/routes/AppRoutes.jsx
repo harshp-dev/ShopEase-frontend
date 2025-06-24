@@ -24,6 +24,7 @@ const AppRoutes = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       {/* <Route element={<ProtectedRoute />}> */}
       <Route path="/admin" element={<AdminDashboard />} />
+
       {/* </Route> */}
       <Route path="/product/:id" element={<ProductDetails />} />
     </Routes>

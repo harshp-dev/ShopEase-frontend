@@ -1,11 +1,11 @@
 import { Stack } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { FormTypes } from '../../constants/formTypes';
+import { FormTypes } from '../../constants/FormTypes';
 import Button from './Button';
 import InputField from './InputField';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-const Form = ({ type, onSubmit }) => {
+const Form = ({ type, onSubmit, defaultValues = {} }) => {
   const formConfig = FormTypes[type];
   const {
     register,
@@ -13,7 +13,11 @@ const Form = ({ type, onSubmit }) => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(formConfig.Schema),
+    defaultValues,
   });
+  //  useEffect(() => {
+  //   reset(defaultValues);
+  // }, [defaultValues, reset]);
 
   const handleFormSubmit = (data) => {
     console.log(`${type} form submitted`, data);
@@ -32,6 +36,7 @@ const Form = ({ type, onSubmit }) => {
             label={field.label}
             type={field.type}
             disabled={field.disabled}
+            options={field.options}
             register={register}
             error={errors[field.name]}
             helperText={errors[field.name]?.message}
