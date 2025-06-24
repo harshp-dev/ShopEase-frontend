@@ -1,27 +1,25 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ToastProvider from './components/common/ToastProvider';
 import AppRoutes from './routes/AppRoutes';
 import { useEffect } from 'react';
 import Cookies from 'js-cookie';
-import { getUser } from './services/AuthService';
-import { setCredentials } from './redux/slices/auth';
+import { fetchMe } from './redux/slices/auth';
+import Loading from './components/common/Loading';
 
 const App = () => {
   const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    const initializeUser = async () => {
-      const token = Cookies.get('accessToken');
-      if (token) {
-        const user = await getUser();
-        if (user) {
-          dispatch(setCredentials({ user }));
-        }
-      }
-    };
+    const token = Cookies.get('accessToken');
+    if (token) {
+      dispatch(fetchMe());
+    }
+  }, [dispatch]);
 
-    initializeUser();
-  }, []);
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
