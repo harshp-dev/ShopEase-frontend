@@ -1,5 +1,6 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
+import { endpoints } from '../constants/endpoints';
+import { logoutUser } from '../services/AuthService';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -9,12 +10,12 @@ const api = axios.create({
 let isRefreshing = false;
 let failedQueue = [];
 
-const processQueue = (error, token = null) => {
+const processQueue = (error) => {
   failedQueue.forEach((prom) => {
     if (error) {
       prom.reject(error);
     } else {
-      prom.resolve(token);
+      prom.resolve();
     }
   });
   failedQueue = [];
@@ -34,8 +35,8 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     if (
-      error.response?.status === 401 &&
-      error.response?.data?.error === 'Session expired. Please login again.' &&
+      error.status === 401 &&
+      error.response?.data?.error === 'Unauthorized:Token expired' &&
       !originalRequest._retry
     ) {
       if (isRefreshing) {
@@ -50,14 +51,14 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        await api.get('/refresh');
+        await api.post(endpoints.AUTH.REFRESH_TOKEN_ENDPOINT);
         isRefreshing = false;
         processQueue(null);
         return api(originalRequest);
       } catch (refreshError) {
         isRefreshing = false;
         processQueue(refreshError);
-        Cookies.remove('isLoggedIn');
+        await logoutUser();
         window.location.href = '/login';
         return Promise.reject(refreshError);
       }
