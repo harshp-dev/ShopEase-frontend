@@ -12,10 +12,22 @@ export const fetchProductsForAdmin = createAsyncThunk(
   },
 );
 
+export const fetchProductsByCategory = createAsyncThunk(
+  'product/fetchProductsByCategory',
+  async ({ category, page = 1, limit = 4, search = '' }, thunkAPI) => {
+    try {
+      return await getProducts({ category, page, limit, search });
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response?.data?.message || 'Failed to fetch products');
+    }
+  },
+);
+
 const productSlice = createSlice({
   name: 'product',
   initialState: {
     products: [],
+    productsByCategory: {},
     total: 0,
     page: 1,
     pages: 1,
@@ -37,6 +49,25 @@ const productSlice = createSlice({
         state.pages = action.payload.totalPages;
       })
       .addCase(fetchProductsForAdmin.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+    builder
+      .addCase(fetchProductsByCategory.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
+        state.loading = false;
+        const category = action.meta.arg.category;
+        state.productsByCategory[category] = {
+          items: action.payload.products || [],
+          total: action.payload.totalCount,
+          page: action.payload.currentPage,
+          pages: action.payload.totalPages,
+        };
+      })
+      .addCase(fetchProductsByCategory.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
