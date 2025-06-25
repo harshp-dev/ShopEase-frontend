@@ -18,6 +18,7 @@ export const loginUser = async (data) => {
     return response.data;
   } catch (error) {
     handleError(error);
+    throw error;
   }
 };
 export const loginAdmin = async (data) => {
@@ -26,6 +27,7 @@ export const loginAdmin = async (data) => {
     return res.data;
   } catch (error) {
     handleError(error);
+    throw error;
   }
 };
 export const registerUser = async (data) => {
@@ -40,6 +42,7 @@ export const registerUser = async (data) => {
     return response.data;
   } catch (error) {
     handleError(error);
+    throw error;
   }
 };
 
@@ -50,6 +53,7 @@ export const forgotPassword = async (data) => {
     return res.data;
   } catch (error) {
     handleError(error);
+    throw error;
   }
 };
 
@@ -59,6 +63,7 @@ export const logoutUser = async () => {
     return response.data;
   } catch (error) {
     handleError(error);
+    throw error;
   }
 };
 
@@ -74,6 +79,7 @@ export const changePassword = async (data) => {
     return res.data;
   } catch (error) {
     handleError(error);
+    throw error;
   }
 };
 
@@ -87,5 +93,6 @@ export const resetPassword = async (token, data) => {
     return res.data;
   } catch (error) {
     handleError(error);
+    throw error;
   }
 };
