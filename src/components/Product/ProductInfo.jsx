@@ -59,7 +59,7 @@ const ProductInfo = ({ product }) => {
           mb: 3,
         }}
       >
-        ${product.price.toFixed(2)}
+        ₹{product.price.toFixed(2)}
       </Typography>
 
       <Stack direction="row" spacing={1} mb={3}>

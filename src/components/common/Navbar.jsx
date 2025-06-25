@@ -54,7 +54,7 @@ const Navbar = () => {
         ];
 
   return (
-    <AppBar position="static" color="primary" elevation={1}>
+    <AppBar position="sticky" sx={{ backgroundColor: '#070142' }} elevation={1}>
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         <Typography variant="h6" component="div">
           {user?.role === 'ADMIN' ? 'Admin Panel' : 'ShopEase'}
