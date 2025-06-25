@@ -16,7 +16,7 @@ const CategorySection = () => {
     if (!categories || categories.length === 0) {
       dispatch(fetchCategories({ page: 1, limit: 10 }));
     }
-  }, [categories, dispatch]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (categories.length) {
@@ -27,13 +27,17 @@ const CategorySection = () => {
         }
       });
     }
-  }, [categories, productsByCategory, dispatch]);
+  }, [categories, dispatch]);
 
   if (categoryLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (!categoryLoading && categories.length === 0) {
     return (
-      <>
-        <LoadingSpinner />
-      </>
+      <Box sx={{ px: 2, py: 4, textAlign: 'center' }}>
+        <Typography variant="h6">No categories found.</Typography>
+      </Box>
     );
   }
 
