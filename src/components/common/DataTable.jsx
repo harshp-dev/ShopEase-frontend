@@ -88,7 +88,9 @@ const DataTable = ({
           <TableHead>
             <TableRow>
               {columns.map((col) => (
-                <TableCell key={col.field}>{col.headerName}</TableCell>
+                <TableCell sx={{ fontWeight: 'bold' }} key={col.field}>
+                  {col.headerName}
+                </TableCell>
               ))}
             </TableRow>
           </TableHead>
