@@ -1,5 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { deleteProductById, getProducts, updateProductById } from '../../services/ProductService';
+import {
+  addProduct,
+  deleteProductById,
+  getProducts,
+  updateProductById,
+} from '../../services/ProductService';
 
 export const fetchProductsForAdmin = createAsyncThunk(
   'product/fetchProductsForAdmin',
@@ -57,6 +62,18 @@ export const fetchProductsByUser = createAsyncThunk(
       return await getProducts({ category, search, page, limit });
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response?.data?.message || 'Failed to fetch products');
+    }
+  },
+);
+
+export const addProductThunk = createAsyncThunk(
+  'category/addProduct',
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await addProduct(formData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
     }
   },
 );
@@ -156,6 +173,18 @@ const productSlice = createSlice({
         state.pages = action.payload.totalPages;
       })
       .addCase(fetchProductsByUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(addProductThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addProductThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = [action.payload, ...state.products];
+      })
+      .addCase(addProductThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

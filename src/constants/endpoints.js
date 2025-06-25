@@ -23,5 +23,6 @@ export const endpoints = {
     DELETE_PRODUCT: '/products',
     UPDATE_PRODUCT: '/products',
     GET_PRODUCT: '/products',
+    ADD_PRODUCT: '/products',
   },
 };

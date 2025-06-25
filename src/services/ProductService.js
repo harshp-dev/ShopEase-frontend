@@ -68,6 +68,21 @@ export const updateProductById = async (id, updateData) => {
     throw error;
   }
 };
+
+export const addProduct = async (formData) => {
+  try {
+    const response = await api.post(endpoints.PRODUCT.ADD_PRODUCT, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log('Error adding product', error);
+    throw error;
+  }
+};
+
 export const addToCart = async (productId, quantity = 1) => {
   try {
     // TODO: Replace with real API call when backend is ready

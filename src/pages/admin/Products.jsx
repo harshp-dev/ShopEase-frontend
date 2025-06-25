@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteProduct, fetchProductsForAdmin, updateProduct } from '../../redux/slices/product';
+import {
+  addProductThunk,
+  deleteProduct,
+  fetchProductsForAdmin,
+  updateProduct,
+} from '../../redux/slices/product';
 import { ColumnTypes } from '../../constants/ColumnTypes';
 import DataTable from '../../components/common/DataTable';
 import { Box, Button, Typography } from '@mui/material';
@@ -19,6 +24,12 @@ function Products() {
   });
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const [addModal, setAddModal] = useState({
+    open: false,
+    productToAdd: null,
+  });
+
   useEffect(() => {
     dispatch(fetchCategories({ page: 1, limit: 100 }));
   }, [dispatch]);
@@ -38,7 +49,12 @@ function Products() {
     });
   };
 
-  const handleAddProduct = () => {};
+  const handleAddProduct = () => {
+    setAddModal({
+      open: true,
+      productToAdd: null,
+    });
+  };
 
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
@@ -56,6 +72,32 @@ function Products() {
         throw error;
       }
     }
+  };
+
+  const handleAddProductSubmit = (data) => {
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      if (key !== 'images') {
+        formData.append(key, data[key]);
+      }
+    });
+    if (data.images && data.images.length > 0) {
+      Array.from(data.images).forEach((file) => {
+        if (file instanceof File) {
+          formData.append('images', file);
+        }
+      });
+    }
+
+    dispatch(addProductThunk(formData))
+      .then(() => {
+        dispatch(fetchProductsForAdmin({ page: page + 1, limit: rowsPerPage }));
+      })
+      .catch((error) => {
+        console.error('Error adding product:', error);
+      });
+
+    setAddModal({ open: false, productToAdd: null });
   };
 
   const handleDeleteConfirm = async () => {
@@ -133,6 +175,14 @@ function Products() {
         type="editProduct"
         initialData={normalizeProduct(selectedProduct)}
         onSubmit={handleFormSubmit}
+      />
+      <Modal
+        open={addModal.open}
+        onClose={() => setAddModal({ open: false, productToAdd: null })}
+        mode="form"
+        title="Add Product"
+        type="addProduct"
+        onSubmit={handleAddProductSubmit}
       />
     </div>
   );
