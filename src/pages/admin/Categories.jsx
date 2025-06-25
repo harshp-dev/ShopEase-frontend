@@ -6,7 +6,6 @@ import Modal from '../../components/common/Modal';
 import { ColumnTypes } from '../../constants/ColumnTypes';
 import Button from '../../components/common/Button';
 
-// Import the category actions
 import {
   handleAddCategory,
   handleUpdateCategory,
@@ -64,7 +63,7 @@ function Categories() {
   };
 
   const handleAddCategorySubmit = (formData) => {
-    handleAddCategory(dispatch, formData, page, rowsPerPage); // Now calling the imported handleAddCategory function
+    handleAddCategory(dispatch, formData, page, rowsPerPage);
     setAddModal({ open: false, categoryToAdd: null });
   };
 
@@ -146,7 +145,7 @@ function Categories() {
           name: '',
           image: '',
         }}
-        onSubmit={handleAddCategorySubmit} // Handle submission for adding category
+        onSubmit={handleAddCategorySubmit}
       />
     </div>
   );
