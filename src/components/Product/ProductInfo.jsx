@@ -11,16 +11,18 @@ import {
   IconButton,
 } from '@mui/material';
 import { ShoppingCart, Inventory, Add, Remove } from '@mui/icons-material';
-import { addToCart } from '../../services/ProductService';
+import { addItemToCart } from '../../redux/slices/cart';
+import { useDispatch } from 'react-redux';
 
 const ProductInfo = ({ product }) => {
   const [addingToCart, setAddingToCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
 
   const handleAddToCart = async () => {
     try {
       setAddingToCart(true);
-      await addToCart(product._id, quantity);
+      await dispatch(addItemToCart({ productId: product._id, quantity })).unwrap();
     } catch (error) {
       console.error('Failed to add to cart:', error);
     } finally {
