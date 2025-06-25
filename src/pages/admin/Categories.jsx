@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories, deleteCategory, updateCategory } from '../../redux/slices/category';
+import {
+  fetchCategories,
+  deleteCategory,
+  updateCategory,
+  addCategoryThunk,
+} from '../../redux/slices/category';
 import DataTable from '../../components/common/DataTable';
 import Modal from '../../components/common/Modal';
 import { ColumnTypes } from '../../constants/ColumnTypes';
-
+import Button from '../../components/common/Button';
 function Categories() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
@@ -16,6 +21,10 @@ function Categories() {
   const [editModal, setEditModal] = useState({
     open: false,
     categoryToEdit: null,
+  });
+  const [addModal, setAddModal] = useState({
+    open: false,
+    categoryToAdd: null,
   });
   const { categories, loading, total } = useSelector((state) => state.category);
 
@@ -34,6 +43,13 @@ function Categories() {
       open: true,
       categoryToEdit: row,
     });
+  };
+  const handleAddCategory = () => {
+    setAddModal({
+      open: true,
+      categoryToAdd: null,
+    });
+
   };
 
   const handleUpdateCategory = (formData) => {
@@ -83,6 +99,33 @@ function Categories() {
       }
     }
   };
+  const handleAddCategorySubmit = (formData) => {
+    const data = new FormData();
+    data.append('name', formData.name);
+
+    if (formData.image) {
+      let fileToUpload = null;
+      if (formData.image instanceof FileList && formData.image.length > 0) {
+        fileToUpload = formData.image[0];
+      } else if (formData.image instanceof File) {
+        fileToUpload = formData.image;
+      }
+
+      if (fileToUpload) {
+        data.append('image', fileToUpload);
+      }
+    }
+
+    dispatch(addCategoryThunk(data))
+      .then(() => {
+        dispatch(fetchCategories({ page: page + 1, limit: rowsPerPage }));
+      })
+      .catch((error) => {
+        console.error('Error adding category:', error);
+      });
+
+    setAddModal({ open: false, categoryToAdd: null });
+  };
 
   const handleDeleteCancel = () => {
     setDeleteModal({
@@ -104,6 +147,12 @@ function Categories() {
       >
         Category List
       </h2>
+      <Button
+        label="Add New Category"
+        variant="contained"
+        onClick={handleAddCategory}
+        sx={{ marginBottom: '16px' }} // Styling the button for spacing
+      />
 
       <DataTable
         columns={ColumnTypes.category}
@@ -141,6 +190,18 @@ function Categories() {
           image: editModal.categoryToEdit?.image || '',
         }}
         onSubmit={handleUpdateCategory}
+      />
+      <Modal
+        open={addModal.open}
+        onClose={() => setAddModal({ open: false, categoryToAdd: null })}
+        mode="form"
+        title="Add Category"
+        type="addCategory" // This will refer to the 'addCategory' in FormTypes
+        initialData={{
+          name: '',
+          image: '',
+        }}
+        onSubmit={handleAddCategorySubmit} // Handle submission for adding category
       />
     </div>
   );
