@@ -12,8 +12,12 @@ export const endpoints = {
   },
   CATEGORY: {
     GET_CATEGORIES: '/category',
+    DELETE_CATEGORY: '/category/delete',
+    UPDATE_CATEGORY: '/category',
   },
   PRODUCT: {
     GET_PRODUCT: '/products',
+    DELETE_CATEGORY: '/category/delete',
+    UPDATE_CATEGORY: '/category',
   },
 };

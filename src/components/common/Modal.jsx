@@ -17,6 +17,7 @@ const Modal = ({
     onSubmit(data);
     onClose();
   };
+
   return (
     <>
       <Dialog open={open} onClose={onClose}>
