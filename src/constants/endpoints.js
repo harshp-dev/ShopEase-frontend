@@ -14,7 +14,9 @@ export const endpoints = {
     GET_CATEGORIES: '/category',
     DELETE_CATEGORY: '/category/delete',
     UPDATE_CATEGORY: '/category',
+    ADD_CATEGORY: '/category/add',
   },
+
   PRODUCT: {
     GET_PRODUCT: '/products',
     DELETE_CATEGORY: '/category/delete',
