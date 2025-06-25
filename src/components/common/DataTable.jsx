@@ -8,10 +8,10 @@ import {
   TableRow,
   Paper,
   TablePagination,
-  CircularProgress,
   Box,
 } from '@mui/material';
 import Button from './Button';
+import LoadingSpinner from './LoadingSpinner';
 
 const DataTable = ({
   columns = [],
@@ -65,11 +65,7 @@ const DataTable = ({
   };
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center py-10">
-        <CircularProgress />
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   return (

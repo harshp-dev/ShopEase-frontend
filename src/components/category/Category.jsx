@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from '../../redux/slices/category';
 import Carousel from './Carousel';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 const Category = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const Category = () => {
   }, [categories.length]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
   if (error) {
     return <div style={{ color: 'red' }}>{error}</div>;

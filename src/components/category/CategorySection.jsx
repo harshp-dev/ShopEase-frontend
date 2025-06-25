@@ -31,10 +31,14 @@ const CategorySection = () => {
   }, [categories, dispatch]);
 
   if (categoryLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (!categoryLoading && categories.length === 0) {
     return (
-      <>
-        <LoadingSpinner />
-      </>
+      <Box sx={{ px: 2, py: 4, textAlign: 'center' }}>
+        <Typography variant="h6">No categories found.</Typography>
+      </Box>
     );
   }
 
