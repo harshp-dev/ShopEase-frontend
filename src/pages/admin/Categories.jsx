@@ -49,6 +49,7 @@ function Categories() {
       open: true,
       categoryToAdd: null,
     });
+
   };
 
   const handleUpdateCategory = (formData) => {
