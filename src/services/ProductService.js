@@ -7,24 +7,78 @@ const handleError = (error) => {
   showErrorToast(message);
 };
 
-export const getProducts = async ({ category, search, page, limit }) => {
-  try {
-    const response = await api.get(endpoints.PRODUCT.GET_PRODUCT, {
-      params: { category, search, page, limit },
-    });
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    handleError(error);
-  }
-};
-
 export const getProductById = async (id) => {
   try {
     const response = await api.get(`${endpoints.PRODUCT.GET_PRODUCT}/${id}`);
     return response.data.product;
   } catch (error) {
     handleError(error);
+    throw error;
+  }
+};
+
+export const getProducts = async ({ category = null, page, limit, search }) => {
+  try {
+    const response = await api.get(endpoints.PRODUCT.GET_PRODUCT, {
+      params: { category, page, limit, search },
+    });
+    return response.data;
+  } catch (error) {
+    handleError(error);
+    throw error;
+  }
+};
+
+export const deleteProductById = async (id) => {
+  const response = await api.delete(`${endpoints.PRODUCT.DELETE_PRODUCT}/${id}`);
+  return response.data;
+};
+
+export const updateProductById = async (id, updateData) => {
+  try {
+    const data = {
+      ...updateData,
+      images: updateData.images ? Array.from(updateData.images) : [],
+    };
+
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      if (key !== 'images') {
+        formData.append(key, data[key]);
+      }
+    });
+    if (data.images && data.images.length > 0) {
+      Array.from(data.images).forEach((file) => {
+        if (file instanceof File) {
+          formData.append('images', file);
+        }
+      });
+    }
+
+    const response = await api.put(`${endpoints.PRODUCT.UPDATE_PRODUCT}/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    showSuccessToast('Product updated successfully!');
+    return response.data;
+  } catch (error) {
+    handleError(error);
+    throw error;
+  }
+};
+
+export const addProduct = async (formData) => {
+  try {
+    const response = await api.post(endpoints.PRODUCT.ADD_PRODUCT, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log('Error adding product', error);
     throw error;
   }
 };
