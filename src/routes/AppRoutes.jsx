@@ -19,6 +19,7 @@ import CartPage from '../pages/user/CartPage';
 import UserLayout from '../pages/user/UserLayout';
 import RestrictedRoute from './RestrictedRoute';
 import ProductDetails from '../pages/product/ProductDetail';
+import PageNotFound from '../pages/NotFound';
 
 const AppRoutes = () => {
   return (
@@ -56,6 +57,7 @@ const AppRoutes = () => {
 
       {/* </Route> */}
       <Route path="/product/:id" element={<ProductDetails />} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };
