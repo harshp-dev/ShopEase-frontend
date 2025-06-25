@@ -25,4 +25,10 @@ export const endpoints = {
     GET_PRODUCT: '/products',
     ADD_PRODUCT: '/products',
   },
+  CART: {
+    GET_CART: '/cart',
+    ADD_TO_CART: '/cart',
+    UPDATE_CART_ITEM: '/cart',
+    REMOVE_CART_ITEM: '/cart',
+  },
 };

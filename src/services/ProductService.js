@@ -82,14 +82,3 @@ export const addProduct = async (formData) => {
     throw error;
   }
 };
-
-export const addToCart = async (productId, quantity = 1) => {
-  try {
-    // TODO: Replace with real API call when backend is ready
-    showSuccessToast(`${quantity} Product added to cart successfully!`);
-    return { success: true, message: 'Product added to cart' };
-  } catch (error) {
-    handleError(error);
-    throw error;
-  }
-};
