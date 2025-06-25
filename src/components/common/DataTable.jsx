@@ -44,7 +44,7 @@ const DataTable = ({
     if (col.field === 'image' || col.field === 'images') {
       return (
         <img
-          src={row.image}
+          src={row.image || row.images[0].url}
           alt={row.name || 'Image'}
           width={50}
           height={50}

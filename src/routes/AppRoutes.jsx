@@ -21,6 +21,7 @@ import RestrictedRoute from './RestrictedRoute';
 import ProductDetails from '../pages/product/ProductDetail';
 import PageNotFound from '../pages/NotFound';
 
+
 const AppRoutes = () => {
   return (
     <Routes>
