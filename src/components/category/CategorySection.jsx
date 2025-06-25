@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Typography, Button, Stack, Card } from '@mui/material';
-import SmallProductCard from '../Product/SmallProductCard';
+import SmallProductCard from '../product/SmallProductCard';
 import { fetchCategories } from '../../redux/slices/category';
 import { fetchProductsByCategory } from '../../redux/slices/product';
 import LoadingSpinner from '../common/LoadingSpinner';
+import { useNavigate } from 'react-router-dom';
 
 const CategorySection = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const { categories, loading: categoryLoading } = useSelector((state) => state.category);
   const { productsByCategory, loading: productLoading } = useSelector((state) => state.product);
 
@@ -16,7 +17,7 @@ const CategorySection = () => {
     if (!categories || categories.length === 0) {
       dispatch(fetchCategories({ page: 1, limit: 10 }));
     }
-  }, [categories, dispatch]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (categories.length) {
@@ -27,7 +28,7 @@ const CategorySection = () => {
         }
       });
     }
-  }, [categories, productsByCategory, dispatch]);
+  }, [categories, dispatch]);
 
   if (categoryLoading) {
     return (
@@ -50,7 +51,11 @@ const CategorySection = () => {
           >
             <Stack direction="row" justifyContent="space-between" alignItems="center">
               <Typography variant="h6">{category.name}</Typography>
-              <Button variant="text" size="small">
+              <Button
+                variant="text"
+                size="small"
+                onClick={() => navigate(`/user/category/${category.name}`)}
+              >
                 View More
               </Button>
             </Stack>
