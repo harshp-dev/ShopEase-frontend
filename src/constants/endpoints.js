@@ -15,5 +15,6 @@ export const endpoints = {
   },
   PRODUCT: {
     GET_PRODUCT_BY_ID_ENDPOINT: '/products',
+    GET_PRODUCTS: '/products',
   },
 };
