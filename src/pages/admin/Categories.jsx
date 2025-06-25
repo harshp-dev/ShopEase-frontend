@@ -104,6 +104,7 @@ function Categories() {
       >
         Category List
       </h2>
+
       <DataTable
         columns={ColumnTypes.category}
         rows={categories}
@@ -125,7 +126,7 @@ function Categories() {
         onClose={handleDeleteCancel}
         mode="confirm"
         title="Delete Category"
-        confirmMessage={`Are you sure you want to delete the category "${deleteModal.categoryToDelete?.name || 'this category'}"? This action cannot be undone.`}
+        confirmMessage={'Are you sure you want to delete the category'}
         confirmButtonLabel="Delete"
         onSubmit={handleDeleteConfirm}
       />

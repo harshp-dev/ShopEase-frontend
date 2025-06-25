@@ -43,7 +43,6 @@ export const updateCategory = createAsyncThunk(
       console.log('C. Service response:', response);
       console.log('D. Response.data:', response.data);
 
-      // Extract the category from the response structure
       const updatedCategory = response.data?.category || response.category || response;
 
       const result = { id, updatedCategory };

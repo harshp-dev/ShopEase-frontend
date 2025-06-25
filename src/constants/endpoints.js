@@ -11,7 +11,12 @@ export const endpoints = {
     ME_ENDPOINT: 'auth/me',
   },
   CATEGORY: {
-    GET_ALL_CATEGORIES: '/category',
+    GET_CATEGORIES: '/category',
+    DELETE_CATEGORY: '/category/delete',
+    UPDATE_CATEGORY: '/category',
+  },
+  PRODUCT: {
+    GET_PRODUCT: '/products',
     DELETE_CATEGORY: '/category/delete',
     UPDATE_CATEGORY: '/category',
   },

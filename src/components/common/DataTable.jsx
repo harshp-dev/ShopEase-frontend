@@ -8,10 +8,10 @@ import {
   TableRow,
   Paper,
   TablePagination,
-  CircularProgress,
   Box,
 } from '@mui/material';
 import Button from './Button';
+import LoadingSpinner from './LoadingSpinner';
 
 const DataTable = ({
   columns = [],
@@ -44,7 +44,7 @@ const DataTable = ({
     if (col.field === 'image' || col.field === 'images') {
       return (
         <img
-          src={row.image}
+          src={row.image || row.images[0].url}
           alt={row.name || 'Image'}
           width={50}
           height={50}
@@ -65,11 +65,7 @@ const DataTable = ({
   };
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center py-10">
-        <CircularProgress />
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   return (
