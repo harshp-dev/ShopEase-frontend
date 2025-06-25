@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetchCategories,
-  deleteCategory,
-  updateCategory,
-  addCategoryThunk,
-} from '../../redux/slices/category';
+import { fetchCategories } from '../../redux/slices/category';
 import DataTable from '../../components/common/DataTable';
 import Modal from '../../components/common/Modal';
 import { ColumnTypes } from '../../constants/ColumnTypes';
 import Button from '../../components/common/Button';
+
+import {
+  handleAddCategory,
+  handleUpdateCategory,
+  handleDeleteCategory,
+} from '../../actions/categoryActions';
+
 function Categories() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
@@ -38,99 +40,42 @@ function Categories() {
       categoryToDelete: row,
     });
   };
+
   const handleEdit = (row) => {
     setEditModal({
       open: true,
       categoryToEdit: row,
     });
   };
-  const handleAddCategory = () => {
+
+  const handleAdd = () => {
     setAddModal({
       open: true,
       categoryToAdd: null,
     });
   };
 
-  const handleUpdateCategory = (formData) => {
+  const handleUpdateCategorySubmit = (formData) => {
     if (editModal.categoryToEdit) {
-      const data = new FormData();
-      data.append('name', formData.name);
-
-      if (formData.image) {
-        let fileToUpload = null;
-
-        if (formData.image instanceof FileList && formData.image.length > 0) {
-          fileToUpload = formData.image[0];
-        } else if (formData.image instanceof File) {
-          fileToUpload = formData.image;
-        }
-
-        if (fileToUpload) {
-          data.append('image', fileToUpload);
-        }
-      }
-
-      dispatch(
-        updateCategory({
-          id: editModal.categoryToEdit._id,
-          data,
-        }),
-      );
-
-      setEditModal({
-        open: false,
-        categoryToEdit: null,
-      });
+      handleUpdateCategory(dispatch, formData, editModal.categoryToEdit._id, page, rowsPerPage);
+      setEditModal({ open: false, categoryToEdit: null });
     }
   };
-  const handleDeleteConfirm = async () => {
-    if (deleteModal.categoryToDelete) {
-      try {
-        dispatch(deleteCategory(deleteModal.categoryToDelete._id));
-        console.log('Category deleted successfully');
-      } catch (error) {
-        console.error('Delete failed:', error);
-      } finally {
-        setDeleteModal({
-          open: false,
-          categoryToDelete: null,
-        });
-      }
-    }
-  };
+
   const handleAddCategorySubmit = (formData) => {
-    const data = new FormData();
-    data.append('name', formData.name);
-
-    if (formData.image) {
-      let fileToUpload = null;
-      if (formData.image instanceof FileList && formData.image.length > 0) {
-        fileToUpload = formData.image[0];
-      } else if (formData.image instanceof File) {
-        fileToUpload = formData.image;
-      }
-
-      if (fileToUpload) {
-        data.append('image', fileToUpload);
-      }
-    }
-
-    dispatch(addCategoryThunk(data))
-      .then(() => {
-        dispatch(fetchCategories({ page: page + 1, limit: rowsPerPage }));
-      })
-      .catch((error) => {
-        console.error('Error adding category:', error);
-      });
-
+    handleAddCategory(dispatch, formData, page, rowsPerPage);
     setAddModal({ open: false, categoryToAdd: null });
   };
 
+  const handleDeleteConfirm = () => {
+    if (deleteModal.categoryToDelete) {
+      handleDeleteCategory(dispatch, deleteModal.categoryToDelete._id);
+      setDeleteModal({ open: false, categoryToDelete: null });
+    }
+  };
+
   const handleDeleteCancel = () => {
-    setDeleteModal({
-      open: false,
-      categoryToDelete: null,
-    });
+    setDeleteModal({ open: false, categoryToDelete: null });
   };
 
   return (
@@ -149,8 +94,8 @@ function Categories() {
       <Button
         label="Add New Category"
         variant="contained"
-        onClick={handleAddCategory}
-        sx={{ marginBottom: '16px' }} // Styling the button for spacing
+        onClick={handleAdd}
+        sx={{ marginBottom: '16px' }}
       />
 
       <DataTable
@@ -188,19 +133,19 @@ function Categories() {
           name: editModal.categoryToEdit?.name || '',
           image: editModal.categoryToEdit?.image || '',
         }}
-        onSubmit={handleUpdateCategory}
+        onSubmit={handleUpdateCategorySubmit}
       />
       <Modal
         open={addModal.open}
         onClose={() => setAddModal({ open: false, categoryToAdd: null })}
         mode="form"
         title="Add Category"
-        type="addCategory" // This will refer to the 'addCategory' in FormTypes
+        type="addCategory"
         initialData={{
           name: '',
           image: '',
         }}
-        onSubmit={handleAddCategorySubmit} // Handle submission for adding category
+        onSubmit={handleAddCategorySubmit}
       />
     </div>
   );

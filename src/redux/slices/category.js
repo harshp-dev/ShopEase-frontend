@@ -46,13 +46,12 @@ export const updateCategory = createAsyncThunk(
   },
 );
 
-// Add category
-export const addCategoryThunk = createAsyncThunk(
+export const addCategories = createAsyncThunk(
   'category/addCategory',
   async (formData, { rejectWithValue }) => {
     try {
       const response = await addCategory(formData);
-      return response.data; // Assuming the response contains the newly added category
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }
@@ -113,16 +112,16 @@ const categorySlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(addCategoryThunk.pending, (state) => {
+      .addCase(addCategories.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(addCategoryThunk.fulfilled, (state, action) => {
+      .addCase(addCategories.fulfilled, (state, action) => {
         state.loading = false;
         state.categories.push(action.payload);
         state.total += 1;
       })
-      .addCase(addCategoryThunk.rejected, (state, action) => {
+      .addCase(addCategories.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
