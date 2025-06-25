@@ -20,7 +20,7 @@ const Form = ({ type, onSubmit, defaultValues = {} }) => {
   // }, [defaultValues, reset]);
 
   const handleFormSubmit = (data) => {
-    console.log(`${type} form submitted`, data);
+    console.log('Form submit triggered', data);
     if (onSubmit) {
       onSubmit(data);
     }

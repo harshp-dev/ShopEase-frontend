@@ -14,9 +14,11 @@ const Modal = ({
   initialData = {},
 }) => {
   const handleFormSubmit = (data) => {
+    console.log(`[Modal.jsx] Received form submit with data:`, data);
     onSubmit(data);
     onClose();
   };
+
   return (
     <>
       <Dialog open={open} onClose={onClose}>
