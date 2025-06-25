@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getProducts } from '../../services/ProductService';
+import { deleteProductById, getProducts, updateProductById } from '../../services/ProductService';
 
 export const fetchProductsForAdmin = createAsyncThunk(
   'product/fetchProductsForAdmin',
@@ -8,6 +8,33 @@ export const fetchProductsForAdmin = createAsyncThunk(
       return await getProducts({ page, limit, search });
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response?.data?.message || 'Failed to fetch products');
+    }
+  },
+);
+
+export const deleteProduct = createAsyncThunk(
+  'category/deleteProductById',
+  async (id, thunkAPI) => {
+    try {
+      await deleteProductById(id);
+      return id;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data?.message || 'Failed to delete product');
+    }
+  },
+);
+
+export const updateProduct = createAsyncThunk(
+  'category/updateProduct',
+  async ({ id, data }, { rejectWithValue }) => {
+    try {
+      const response = await updateProductById(id, data);
+
+      const result = { id, updatedProduct: response.data || response };
+
+      return result;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
     }
   },
 );
@@ -37,6 +64,36 @@ const productSlice = createSlice({
         state.pages = action.payload.totalPages;
       })
       .addCase(fetchProductsForAdmin.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = state.products.filter((product) => product._id !== action.payload);
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        const index = state.products.findIndex((p) => p._id === action.payload.id);
+        if (index !== -1) {
+          state.products[index] = {
+            ...state.products[index],
+            ...action.payload.updatedProduct,
+          };
+        }
+      })
+      .addCase(updateProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

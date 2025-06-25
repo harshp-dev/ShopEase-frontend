@@ -4,6 +4,7 @@ import { FormTypes } from '../../constants/formTypes';
 import Button from './Button';
 import InputField from './InputField';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useSelector } from 'react-redux';
 
 const Form = ({ type, onSubmit, defaultValues = {} }) => {
   const formConfig = FormTypes[type];
@@ -15,12 +16,14 @@ const Form = ({ type, onSubmit, defaultValues = {} }) => {
     resolver: yupResolver(formConfig.Schema),
     defaultValues,
   });
-  //  useEffect(() => {
-  //   reset(defaultValues);
-  // }, [defaultValues, reset]);
+
+  const categories = useSelector((state) => state.category.categories);
+  const categoryOptions = categories.map((cat) => ({
+    value: cat._id,
+    label: cat.name,
+  }));
 
   const handleFormSubmit = (data) => {
-    console.log('Form submit triggered', data);
     if (onSubmit) {
       onSubmit(data);
     }
@@ -36,10 +39,12 @@ const Form = ({ type, onSubmit, defaultValues = {} }) => {
             label={field.label}
             type={field.type}
             disabled={field.disabled}
-            options={field.options}
+            options={field.name === 'category' ? categoryOptions : field.options || []}
             register={register}
             error={errors[field.name]}
             helperText={errors[field.name]?.message}
+            multiple={type === 'editProduct' || type === 'addProduct' ? true : false}
+            defaultValue={defaultValues[field.name] || ''}
           />
         ))}
         <Button type="submit" label={formConfig.submitButtonLabel} />

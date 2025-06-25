@@ -13,9 +13,8 @@ const Modal = ({
   confirmButtonLabel = 'Delete',
   initialData = {},
 }) => {
-  const handleFormSubmit = (data) => {
-    console.log(`[Modal.jsx] Received form submit with data:`, data);
-    onSubmit(data);
+  const handleFormSubmit = async (data) => {
+    await onSubmit(data);
     onClose();
   };
 

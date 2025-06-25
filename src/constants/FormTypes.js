@@ -4,10 +4,9 @@ import {
   forgotPasswordSchema,
   resetPasswordSchema,
   changePasswordSchema,
-  addProductSchema,
-  editProductSchema,
   addCategorySchema,
 } from '../schema/authSchema';
+import { addProductSchema, editProductSchema } from '../schema/productSchema';
 
 export const FormTypes = {
   login: {
@@ -111,10 +110,6 @@ export const FormTypes = {
         name: 'category',
         label: 'Category',
         type: 'select',
-        options: [
-          { value: '', label: 'Select a category' },
-          { value: 'electronics', label: 'Electronics' },
-        ],
       },
       { name: 'stock', label: 'Stock', type: 'number' },
       { name: 'images', label: 'Upload Images', type: 'file' },

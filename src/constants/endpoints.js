@@ -18,5 +18,7 @@ export const endpoints = {
   PRODUCT: {
     GET_PRODUCT_BY_ID_ENDPOINT: '/products',
     GET_PRODUCTS: '/products',
+    DELETE_PRODUCT: '/products',
+    UPDATE_PRODUCT: '/products',
   },
 };

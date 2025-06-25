@@ -29,6 +29,45 @@ export const getProducts = async ({ category = null, page, limit, search }) => {
   }
 };
 
+export const deleteProductById = async (id) => {
+  const response = await api.delete(`${endpoints.PRODUCT.DELETE_PRODUCT}/${id}`);
+  return response.data;
+};
+
+export const updateProductById = async (id, updateData) => {
+  try {
+    const data = {
+      ...updateData,
+      images: updateData.images ? Array.from(updateData.images) : [],
+    };
+
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      if (key !== 'images') {
+        formData.append(key, data[key]);
+      }
+    });
+    if (data.images && data.images.length > 0) {
+      Array.from(data.images).forEach((file) => {
+        if (file instanceof File) {
+          formData.append('images', file);
+        }
+      });
+    }
+
+    const response = await api.put(`${endpoints.PRODUCT.UPDATE_PRODUCT}/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    showSuccessToast('Product updated successfully!');
+    return response.data;
+  } catch (error) {
+    handleError(error);
+    throw error;
+  }
+};
 export const addToCart = async (productId, quantity = 1) => {
   try {
     // TODO: Replace with real API call when backend is ready
