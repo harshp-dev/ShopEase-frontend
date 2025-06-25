@@ -9,7 +9,7 @@ const handleError = (error) => {
 
 export const getProductById = async (id) => {
   try {
-    const response = await api.get(`${endpoints.PRODUCT.GET_PRODUCT_BY_ID_ENDPOINT}/${id}`);
+    const response = await api.get(`${endpoints.PRODUCT.GET_PRODUCT}/${id}`);
     return response.data.product;
   } catch (error) {
     handleError(error);
@@ -19,7 +19,7 @@ export const getProductById = async (id) => {
 
 export const getProducts = async ({ category = null, page, limit, search }) => {
   try {
-    const response = await api.get(endpoints.PRODUCT.GET_PRODUCTS, {
+    const response = await api.get(endpoints.PRODUCT.GET_PRODUCT, {
       params: { category, page, limit, search },
     });
     return response.data;

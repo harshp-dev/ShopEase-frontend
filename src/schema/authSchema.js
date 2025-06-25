@@ -73,3 +73,7 @@ export const addCategorySchema = yup.object({
       return value && ['image/jpeg', 'image/png'].includes(value.type);
     }),
 });
+export const editCategorySchema = yup.object({
+  name: yup.string().required('Category name is required'),
+  image: yup.mixed().notRequired(),
+});

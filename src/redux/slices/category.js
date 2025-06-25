@@ -30,7 +30,6 @@ export const deleteCategory = createAsyncThunk(
   },
 );
 
-// to update the category
 export const updateCategory = createAsyncThunk(
   'category/updateCategory',
   async ({ id, data }, { rejectWithValue }) => {
@@ -44,7 +43,9 @@ export const updateCategory = createAsyncThunk(
       console.log('C. Service response:', response);
       console.log('D. Response.data:', response.data);
 
-      const result = { id, updatedCategory: response.data || response };
+      const updatedCategory = response.data?.category || response.category || response;
+
+      const result = { id, updatedCategory };
       console.log('E. Returning result:', result);
 
       return result;
@@ -94,8 +95,6 @@ const categorySlice = createSlice({
       .addCase(updateCategory.fulfilled, (state, action) => {
         state.loading = false;
         const { id, updatedCategory } = action.payload;
-
-        // Update the specific category in the categories array
         const index = state.categories.findIndex((category) => category._id === id);
         if (index !== -1) {
           state.categories[index] = updatedCategory;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories, deleteCategory } from '../../redux/slices/category';
+import { fetchCategories, deleteCategory, updateCategory } from '../../redux/slices/category';
 import DataTable from '../../components/common/DataTable';
 import Modal from '../../components/common/Modal';
 import { ColumnTypes } from '../../constants/ColumnTypes';
@@ -13,20 +13,15 @@ function Categories() {
     open: false,
     categoryToDelete: null,
   });
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
+  const [editModal, setEditModal] = useState({
+    open: false,
+    categoryToEdit: null,
+  });
   const { categories, loading, total } = useSelector((state) => state.category);
 
   useEffect(() => {
     dispatch(fetchCategories({ page: page + 1, limit: rowsPerPage }));
   }, [dispatch, page, rowsPerPage]);
-
-  const handleEdit = (row) => {
-    console.log('Edit category:', row);
-    setSelectedCategory(row);
-    setIsEditModalOpen(true);
-  };
 
   const handleDelete = (row) => {
     setDeleteModal({
@@ -34,45 +29,45 @@ function Categories() {
       categoryToDelete: row,
     });
   };
-
-  const handleCloseEditModal = () => {
-    setIsEditModalOpen(false);
-    setSelectedCategory(null);
-  };
-  // const handleFormSubmit = (formData) => {
-  //   console.log(`[Categories.jsx] Form data received:`, formData);
-
-  //   const data = new FormData();
-  //   data.append('name', formData.name);
-  //   if (formData.image) {
-  //     data.append('image', formData.image);
-  //     console.log(`[Categories.jsx] Image attached:`, formData.image);
-  //   }
-
-  //   try {
-  //     const result = dispatch(
-  //       updateCategory({
-  //         id: selectedCategory._id,
-  //         data,
-  //       }),
-  //     );
-
-  //     console.log(`[Categories.jsx] Dispatch result:`, result);
-
-  //     if (updateCategory.fulfilled.match(result)) {
-  //       handleCloseEditModal();
-  //       console.log('[Categories.jsx] Category updated successfully');
-  //     } else {
-  //       console.error('[Categories.jsx] Failed to update category:', result.payload);
-  //     }
-  //   } catch (error) {
-  //     console.error('[Categories.jsx] Error during update:', error);
-  //   }
-  // };
-  const handleFormSubmit = () => {
-    console.log('button clicked');
+  const handleEdit = (row) => {
+    setEditModal({
+      open: true,
+      categoryToEdit: row,
+    });
   };
 
+  const handleUpdateCategory = (formData) => {
+    if (editModal.categoryToEdit) {
+      const data = new FormData();
+      data.append('name', formData.name);
+
+      if (formData.image) {
+        let fileToUpload = null;
+
+        if (formData.image instanceof FileList && formData.image.length > 0) {
+          fileToUpload = formData.image[0];
+        } else if (formData.image instanceof File) {
+          fileToUpload = formData.image;
+        }
+
+        if (fileToUpload) {
+          data.append('image', fileToUpload);
+        }
+      }
+
+      dispatch(
+        updateCategory({
+          id: editModal.categoryToEdit._id,
+          data,
+        }),
+      );
+
+      setEditModal({
+        open: false,
+        categoryToEdit: null,
+      });
+    }
+  };
   const handleDeleteConfirm = async () => {
     if (deleteModal.categoryToDelete) {
       try {
@@ -109,12 +104,13 @@ function Categories() {
       >
         Category List
       </h2>
+
       <DataTable
         columns={ColumnTypes.category}
         rows={categories}
         loading={loading}
-        onEdit={handleEdit}
         onDelete={handleDelete}
+        onEdit={handleEdit}
         page={page}
         rowsPerPage={rowsPerPage}
         total={total}
@@ -130,18 +126,21 @@ function Categories() {
         onClose={handleDeleteCancel}
         mode="confirm"
         title="Delete Category"
-        confirmMessage={`Are you sure you want to delete the category "${deleteModal.categoryToDelete?.name || 'this category'}"? This action cannot be undone.`}
+        confirmMessage={'Are you sure you want to delete the category'}
         confirmButtonLabel="Delete"
         onSubmit={handleDeleteConfirm}
       />
       <Modal
-        open={isEditModalOpen}
-        onClose={handleCloseEditModal}
-        title="Edit Category"
+        open={editModal.open}
+        onClose={() => setEditModal({ open: false, categoryToEdit: null })}
         mode="form"
+        title="Edit Category"
         type="editCategory"
-        initialData={selectedCategory}
-        onSubmit={handleFormSubmit}
+        initialData={{
+          name: editModal.categoryToEdit?.name || '',
+          image: editModal.categoryToEdit?.image || '',
+        }}
+        onSubmit={handleUpdateCategory}
       />
     </div>
   );

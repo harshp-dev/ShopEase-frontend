@@ -3,7 +3,7 @@ import AdminDashboard from '../pages/admin/AdminDashboard';
 import Login from '../pages/LoginPage';
 import Register from '../pages/RegisterPage';
 import ResetPassword from '../pages/user/ResetPassword';
-import ChangePassword from '../pages/user/ChangePaasword';
+import ChangePassword from '../pages/user/ChangePassword';
 import LandingPage from '../pages/LandingPage';
 import ForgotPassword from '../pages/ForgotPassword';
 import AdminProtectedRoute from './AdminProtectedRoute';
@@ -12,13 +12,16 @@ import AdminLayout from '../pages/admin/AdminLayout';
 import Products from '../pages/admin/Products';
 import Orders from '../pages/admin/Orders';
 import Categories from '../pages/admin/Categories';
-import HomePage from '../pages/user/HomePage';
 import ShopPage from '../pages/user/ShopPage';
 import OrdersPage from '../pages/user/OrdersPage';
 import CartPage from '../pages/user/CartPage';
 import UserLayout from '../pages/user/UserLayout';
 import RestrictedRoute from './RestrictedRoute';
 import ProductDetails from '../pages/product/ProductDetail';
+import UserDashboard from '../pages/user/UserDashboard';
+import PageNotFound from '../pages/NotFound';
+import CategoryProduct from '../pages/user/CategoryProduct';
+
 const AppRoutes = () => {
   return (
     <Routes>
@@ -44,17 +47,21 @@ const AppRoutes = () => {
 
       <Route element={<UserProtectedRoute />}>
         <Route path="/user" element={<UserLayout />}>
-          <Route index element={<HomePage />} />
+          <Route index element={<UserDashboard />} />
           <Route path="shop" element={<ShopPage />} />
           <Route path="orders" element={<OrdersPage />} />
           <Route path="cart" element={<CartPage />} />
+          <Route path="category/:categoryName" element={<CategoryProduct />} />
         </Route>
       </Route>
+
       {/* <Route element={<ProtectedRoute />}> */}
       <Route path="/admin" element={<AdminDashboard />} />
 
       {/* </Route> */}
+
       <Route path="/product/:id" element={<ProductDetails />} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

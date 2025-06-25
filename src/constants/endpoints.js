@@ -12,13 +12,14 @@ export const endpoints = {
   },
   CATEGORY: {
     GET_ALL_CATEGORIES: '/category',
+    GET_CATEGORIES: '/category',
     DELETE_CATEGORY: '/category/delete',
     UPDATE_CATEGORY: '/category',
   },
   PRODUCT: {
     GET_PRODUCT_BY_ID_ENDPOINT: '/products',
-    GET_PRODUCTS: '/products',
     DELETE_PRODUCT: '/products',
     UPDATE_PRODUCT: '/products',
+    GET_PRODUCT: '/products',
   },
 };
