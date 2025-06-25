@@ -4,7 +4,7 @@ import AppRoutes from './routes/AppRoutes';
 import { useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { fetchMe } from './redux/slices/auth';
-import Loading from './components/common/Loading';
+import LoadingSpinner from './components/common/LoadingSpinner';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const App = () => {
   }, [dispatch]);
 
   if (loading) {
-    return <Loading />;
+    return <LoadingSpinner />;
   }
 
   return (
