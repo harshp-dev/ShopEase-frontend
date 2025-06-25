@@ -8,10 +8,10 @@ import {
   TableRow,
   Paper,
   TablePagination,
-  CircularProgress,
   Box,
 } from '@mui/material';
 import Button from './Button';
+import LoadingSpinner from './LoadingSpinner';
 
 const DataTable = ({
   columns = [],
@@ -42,15 +42,28 @@ const DataTable = ({
     }
 
     if (col.field === 'image' || col.field === 'images') {
-      return (
-        <img
-          src={row.image || row.images[0].url}
-          alt={row.name || 'Image'}
-          width={50}
-          height={50}
-          style={{ borderRadius: '4px', objectFit: 'cover' }}
-        />
-      );
+      const imageUrl = row.image || (row.images && row.images[0]?.url);
+      if (imageUrl) {
+        return (
+          <img
+            src={imageUrl}
+            alt={row.name || 'Image'}
+            width={50}
+            height={50}
+            style={{ borderRadius: '4px', objectFit: 'cover' }}
+          />
+        );
+      } else {
+        return (
+          <img
+            src="-IMAGE-"
+            alt="No Image"
+            width={50}
+            height={50}
+            style={{ borderRadius: '4px', objectFit: 'cover' }}
+          />
+        );
+      }
     }
 
     if (col.field === 'category') {
@@ -65,11 +78,7 @@ const DataTable = ({
   };
 
   if (loading) {
-    return (
-      <div className="flex justify-center items-center py-10">
-        <CircularProgress />
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   return (

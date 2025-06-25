@@ -8,6 +8,7 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  Grow,
 } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -85,8 +86,9 @@ const Navbar = () => {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleMenuClose}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+                TransitionComponent={Grow}
               >
                 <MenuItem onClick={handleChangePassword}>Change Password</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>

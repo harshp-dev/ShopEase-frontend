@@ -6,12 +6,12 @@ import {
   Chip,
   Divider,
   Stack,
-  CircularProgress,
   TextField,
   IconButton,
 } from '@mui/material';
 import { ShoppingCart, Inventory, Add, Remove } from '@mui/icons-material';
 import { addToCart } from '../../services/ProductService';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 const ProductInfo = ({ product }) => {
   const [addingToCart, setAddingToCart] = useState(false);
@@ -144,7 +144,7 @@ const ProductInfo = ({ product }) => {
         fullWidth
         onClick={handleAddToCart}
         disabled={!isInStock || addingToCart}
-        startIcon={addingToCart ? <CircularProgress size={20} /> : <ShoppingCart />}
+        startIcon={addingToCart ? <LoadingSpinner /> : <ShoppingCart />}
         sx={{
           py: 1.5,
           fontSize: '1.1rem',
