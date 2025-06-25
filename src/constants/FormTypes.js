@@ -7,6 +7,7 @@ import {
   addProductSchema,
   editProductSchema,
   addCategorySchema,
+  editCategorySchema,
 } from '../schema/authSchema';
 
 export const FormTypes = {
@@ -155,7 +156,7 @@ export const FormTypes = {
       { name: 'name', label: 'Category Name', type: 'text' },
       { name: 'image', label: 'Upload Image', type: 'file' },
     ],
-    Schema: addCategorySchema,
+    Schema: editCategorySchema,
     submitButtonLabel: 'Update Category',
   },
 };
