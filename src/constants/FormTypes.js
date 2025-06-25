@@ -150,4 +150,12 @@ export const FormTypes = {
     Schema: addCategorySchema,
     submitButtonLabel: 'Add Category',
   },
+  editCategory: {
+    fields: [
+      { name: 'name', label: 'Category Name', type: 'text' },
+      { name: 'image', label: 'Upload Image', type: 'file' },
+    ],
+    Schema: addCategorySchema,
+    submitButtonLabel: 'Update Category',
+  },
 };
