@@ -11,10 +11,9 @@ export const endpoints = {
     ME_ENDPOINT: 'auth/me',
   },
   CATEGORY: {
-    GET_ALL_CATEGORIES: '/category',
+    GET_CATEGORIES: '/category',
   },
   PRODUCT: {
-    GET_PRODUCT_BY_ID_ENDPOINT: '/products',
-    GET_PRODUCTS: '/products',
+    GET_PRODUCT: '/products',
   },
 };

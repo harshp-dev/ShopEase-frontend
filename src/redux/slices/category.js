@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getCategories } from '../../services/CategoryService';
+
 export const fetchCategories = createAsyncThunk(
   'category/fetchCategories',
   async ({ page = 1, limit = 10, search = '' }, thunkAPI) => {
