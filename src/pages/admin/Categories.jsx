@@ -34,6 +34,13 @@ function Categories() {
     dispatch(fetchCategories({ page: page + 1, limit: rowsPerPage }));
   }, [dispatch, page, rowsPerPage]);
 
+  const adjustPageAfterDataChange = (newTotal) => {
+    const maxPage = Math.max(0, Math.ceil(newTotal / rowsPerPage) - 1);
+    if (page > maxPage) {
+      setPage(maxPage);
+    }
+  };
+
   const handleDelete = (row) => {
     setDeleteModal({
       open: true,
@@ -69,7 +76,13 @@ function Categories() {
 
   const handleDeleteConfirm = () => {
     if (deleteModal.categoryToDelete) {
-      handleDeleteCategory(dispatch, deleteModal.categoryToDelete._id);
+      handleDeleteCategory(dispatch, deleteModal.categoryToDelete._id, page, rowsPerPage).then(
+        () => {
+          // Calculate new total after deletion
+          const newTotal = total - 1;
+          adjustPageAfterDataChange(newTotal);
+        },
+      );
       setDeleteModal({ open: false, categoryToDelete: null });
     }
   };

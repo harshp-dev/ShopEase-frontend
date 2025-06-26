@@ -22,12 +22,13 @@ export const handleAddCategory = (dispatch, formData, page, rowsPerPage) => {
     }
   }
 
-  dispatch(addCategories(data))
+  return dispatch(addCategories(data))
     .then(() => {
       dispatch(fetchCategories({ page: page + 1, limit: rowsPerPage }));
     })
     .catch((error) => {
       console.error('Error adding category:', error);
+      throw error;
     });
 };
 
@@ -49,7 +50,7 @@ export const handleUpdateCategory = (dispatch, formData, categoryId, page, rowsP
     }
   }
 
-  dispatch(
+  return dispatch(
     updateCategory({
       id: categoryId,
       data,
@@ -60,15 +61,18 @@ export const handleUpdateCategory = (dispatch, formData, categoryId, page, rowsP
     })
     .catch((error) => {
       console.error('Error updating category:', error);
+      throw error;
     });
 };
 
-export const handleDeleteCategory = (dispatch, categoryId) => {
-  dispatch(deleteCategory(categoryId))
+export const handleDeleteCategory = (dispatch, categoryId, page, rowsPerPage) => {
+  return dispatch(deleteCategory(categoryId))
     .then(() => {
       console.log('Category deleted successfully');
+      return dispatch(fetchCategories({ page: page + 1, limit: rowsPerPage }));
     })
     .catch((error) => {
       console.error('Delete failed:', error);
+      throw error;
     });
 };
