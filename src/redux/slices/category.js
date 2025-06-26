@@ -6,7 +6,6 @@ import {
   addCategory,
 } from '../../services/CategoryService';
 
-// Fetch categories
 export const fetchCategories = createAsyncThunk(
   'category/fetchCategories',
   async ({ page = 1, limit = 10, search = '' }, thunkAPI) => {
@@ -18,7 +17,6 @@ export const fetchCategories = createAsyncThunk(
   },
 );
 
-// Delete category
 export const deleteCategory = createAsyncThunk(
   'category/deleteCategoryById',
   async (id, thunkAPI) => {
@@ -31,7 +29,6 @@ export const deleteCategory = createAsyncThunk(
   },
 );
 
-// Update category
 export const updateCategory = createAsyncThunk(
   'category/updateCategory',
   async ({ id, data }, { rejectWithValue }) => {
@@ -46,13 +43,12 @@ export const updateCategory = createAsyncThunk(
   },
 );
 
-// Add category
-export const addCategoryThunk = createAsyncThunk(
+export const addCategories = createAsyncThunk(
   'category/addCategory',
   async (formData, { rejectWithValue }) => {
     try {
       const response = await addCategory(formData);
-      return response.data; // Assuming the response contains the newly added category
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
     }
@@ -72,7 +68,6 @@ const categorySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Fetch Categories
       .addCase(fetchCategories.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -89,13 +84,11 @@ const categorySlice = createSlice({
         state.error = action.payload;
       })
 
-      // Delete Category
       .addCase(deleteCategory.fulfilled, (state, action) => {
         state.categories = state.categories.filter((cat) => cat._id !== action.payload);
         state.total -= 1;
       })
 
-      // Update Category
       .addCase(updateCategory.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -113,16 +106,16 @@ const categorySlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(addCategoryThunk.pending, (state) => {
+      .addCase(addCategories.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(addCategoryThunk.fulfilled, (state, action) => {
+      .addCase(addCategories.fulfilled, (state, action) => {
         state.loading = false;
         state.categories.push(action.payload);
         state.total += 1;
       })
-      .addCase(addCategoryThunk.rejected, (state, action) => {
+      .addCase(addCategories.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
