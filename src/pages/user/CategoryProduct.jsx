@@ -31,7 +31,11 @@ const CategoryProduct = () => {
       ) : (
         <Grid container spacing={2}>
           {products.map((product) => (
-            <Grid item key={product._id}>
+            <Grid
+              item
+              key={product._id}
+              sx={{ backgroundColor: '#f5f9fc', mb: 2, px: 2, borderRadius: '8px' }}
+            >
               <SmallProductCard product={product} />
             </Grid>
           ))}

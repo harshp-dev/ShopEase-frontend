@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Typography, Button, Stack, Card } from '@mui/material';
 import SmallProductCard from '../product/SmallProductCard';
-import { fetchCategories } from '../../redux/slices/category';
 import { fetchProductsByCategory } from '../../redux/slices/product';
 import LoadingSpinner from '../common/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
@@ -14,21 +13,15 @@ const CategorySection = () => {
   const { productsByCategory, loading: productLoading } = useSelector((state) => state.product);
 
   useEffect(() => {
-    if (!categories || categories.length === 0) {
-      dispatch(fetchCategories({ page: 1, limit: 10 }));
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
     if (categories.length) {
-      categories.forEach((category) => {
+      categories.slice(0, 10).forEach((category) => {
         const isProductPresent = !!productsByCategory[category.name];
         if (!isProductPresent) {
           dispatch(fetchProductsByCategory({ category: category.name, limit: 5 }));
         }
       });
     }
-  }, [categories, dispatch]);
+  }, [categories]);
 
   if (categoryLoading) {
     return <LoadingSpinner />;

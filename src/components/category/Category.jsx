@@ -10,9 +10,9 @@ const Category = () => {
 
   useEffect(() => {
     if (!categories.length) {
-      dispatch(fetchCategories({ page: 1, limit: 10 }));
+      dispatch(fetchCategories({ page: 1, limit: 100 }));
     }
-  }, [categories.length]);
+  }, []);
 
   if (loading) {
     return <LoadingSpinner />;
@@ -20,7 +20,7 @@ const Category = () => {
   if (error) {
     return <div style={{ color: 'red' }}>{error}</div>;
   }
-  return <Carousel items={categories} imageKey="image" titleKey="name" slidesToShow={4} />;
+  return <Carousel items={categories} imageKey="image" titleKey="name" slidesToShow={8} />;
 };
 
 export default Category;

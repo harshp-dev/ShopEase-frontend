@@ -52,15 +52,10 @@ const AppRoutes = () => {
           <Route path="orders" element={<OrdersPage />} />
           <Route path="cart" element={<CartPage />} />
           <Route path="category/:categoryName" element={<CategoryProduct />} />
+          <Route path="product/:id" element={<ProductDetails />} />
         </Route>
       </Route>
 
-      {/* <Route element={<ProtectedRoute />}> */}
-      <Route path="/admin" element={<AdminDashboard />} />
-
-      {/* </Route> */}
-
-      <Route path="/product/:id" element={<ProductDetails />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
