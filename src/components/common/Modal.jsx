@@ -13,8 +13,8 @@ const Modal = ({
   confirmButtonLabel = 'Delete',
   initialData = {},
 }) => {
-  const handleFormSubmit = (data) => {
-    onSubmit(data);
+  const handleFormSubmit = async (data) => {
+    await onSubmit(data);
     onClose();
   };
 
