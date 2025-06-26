@@ -13,4 +13,16 @@ export const ColumnTypes = {
     { field: 'images', headerName: 'Image' },
     { field: 'actions', headerName: 'Actions' },
   ],
+
+  orders: [
+    { field: 'orderId', headerName: 'Order ID' },
+    { field: 'customer', headerName: 'Customer' },
+    { field: 'mobileNumber', headerName: 'Mobile' },
+    { field: 'products', headerName: 'Products' },
+    { field: 'totalQuantity', headerName: 'Total Items' },
+    { field: 'totalAmount', headerName: 'Total Amount' },
+    { field: 'address', headerName: 'Shipping Address' },
+    { field: 'createdAt', headerName: 'Order Date' },
+    { field: 'paymentId', headerName: 'Payment ID' },
+  ],
 };
