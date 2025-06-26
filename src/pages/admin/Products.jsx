@@ -40,6 +40,13 @@ function Products() {
     dispatch(fetchProductsForAdmin({ page: page + 1, limit: rowsPerPage }));
   }, [dispatch, page, rowsPerPage]);
 
+  const adjustPageAfterDataChange = (newTotal) => {
+    const maxPage = Math.max(0, Math.ceil(newTotal / rowsPerPage) - 1);
+    if (page > maxPage) {
+      setPage(maxPage);
+    }
+  };
+
   const handleEdit = (row) => {
     setEditModal({
       open: true,
@@ -110,7 +117,10 @@ function Products() {
   const handleDeleteConfirm = async () => {
     if (deleteModal.productToDelete) {
       try {
-        dispatch(deleteProduct(deleteModal.productToDelete._id));
+        dispatch(deleteProduct(deleteModal.productToDelete._id)).then(() => {
+          const newTotal = total - 1;
+          adjustPageAfterDataChange(newTotal);
+        });
       } catch (error) {
         console.error('Delete failed:', error);
       } finally {
