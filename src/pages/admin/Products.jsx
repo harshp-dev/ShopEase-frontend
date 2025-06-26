@@ -8,10 +8,11 @@ import {
 } from '../../redux/slices/product';
 import { ColumnTypes } from '../../constants/ColumnTypes';
 import DataTable from '../../components/common/DataTable';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Modal from '../../components/common/Modal';
 import { fetchCategories } from '../../redux/slices/category';
 import normalizeProduct from '../../helpers/normalizeProduct ';
+import Button from '../../components/common/Button';
 
 function Products() {
   const dispatch = useDispatch();
@@ -22,8 +23,10 @@ function Products() {
     open: false,
     productToDelete: null,
   });
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [editModal, setEditModal] = useState({
+    open: false,
+    productToEdit: null,
+  });
 
   const [addModal, setAddModal] = useState({
     open: false,
@@ -38,8 +41,10 @@ function Products() {
   }, [dispatch, page, rowsPerPage]);
 
   const handleEdit = (row) => {
-    setSelectedProduct(row);
-    setIsEditModalOpen(true);
+    setEditModal({
+      open: true,
+      productToEdit: row,
+    });
   };
 
   const handleDelete = (row) => {
@@ -57,16 +62,18 @@ function Products() {
   };
 
   const handleCloseEditModal = () => {
-    setIsEditModalOpen(false);
-    setSelectedProduct(null);
+    setEditModal({
+      open: false,
+      productToEdit: null,
+    });
   };
 
   const handleFormSubmit = async (data) => {
-    if (selectedProduct) {
+    if (editModal.productToEdit) {
       try {
-        await dispatch(updateProduct({ id: selectedProduct._id, data }))
-          .unwrap()
-          .then(() => dispatch(fetchProductsForAdmin({ page: page + 1, limit: rowsPerPage })));
+        await dispatch(updateProduct({ id: editModal.productToEdit._id, data })).then(() => {
+          dispatch(fetchProductsForAdmin({ page: page + 1, limit: rowsPerPage }));
+        });
       } catch (error) {
         console.error('9. Update failed:', error);
         throw error;
@@ -131,17 +138,10 @@ function Products() {
         mb={4}
         sx={{ height: '20vh' }}
       >
-        <Typography variant="h4" component="h2" width="100%">
+        <Typography variant="h4" component="h2" width="50%">
           Product List
         </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ width: 'auto', px: 3 }}
-          onClick={handleAddProduct}
-        >
-          Add Product
-        </Button>
+        <Button label="Add New Product" variant="contained" onClick={handleAddProduct} />
       </Box>
       <DataTable
         columns={ColumnTypes.product}
@@ -168,12 +168,12 @@ function Products() {
         onSubmit={handleDeleteConfirm}
       />
       <Modal
-        open={isEditModalOpen}
+        open={editModal.open}
         onClose={handleCloseEditModal}
         title="Edit Product"
         mode="form"
         type="editProduct"
-        initialData={normalizeProduct(selectedProduct)}
+        initialData={normalizeProduct(editModal.productToEdit)}
         onSubmit={handleFormSubmit}
       />
       <Modal
