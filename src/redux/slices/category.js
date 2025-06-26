@@ -3,9 +3,10 @@ import {
   getCategories,
   deleteCategoryById,
   updateCategoryById,
+  addCategory,
 } from '../../services/CategoryService';
 
-// to fetch categories
+// Fetch categories
 export const fetchCategories = createAsyncThunk(
   'category/fetchCategories',
   async ({ page = 1, limit = 10, search = '' }, thunkAPI) => {
@@ -17,7 +18,7 @@ export const fetchCategories = createAsyncThunk(
   },
 );
 
-// to delete category
+// Delete category
 export const deleteCategory = createAsyncThunk(
   'category/deleteCategoryById',
   async (id, thunkAPI) => {
@@ -30,32 +31,34 @@ export const deleteCategory = createAsyncThunk(
   },
 );
 
+// Update category
 export const updateCategory = createAsyncThunk(
   'category/updateCategory',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      console.log('=== REDUX THUNK DEBUG ===');
-      console.log('A. Thunk called with id:', id);
-      console.log('B. Thunk called with data:', data);
-
       const response = await updateCategoryById(id, data);
-
-      console.log('C. Service response:', response);
-      console.log('D. Response.data:', response.data);
-
       const updatedCategory = response.data?.category || response.category || response;
-
       const result = { id, updatedCategory };
-      console.log('E. Returning result:', result);
-
       return result;
     } catch (error) {
-      console.log('F. Thunk error:', error);
-      console.log('G. Error response:', error.response?.data);
       return rejectWithValue(error.response?.data || error.message);
     }
   },
 );
+
+// Add category
+export const addCategoryThunk = createAsyncThunk(
+  'category/addCategory',
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await addCategory(formData);
+      return response.data; // Assuming the response contains the newly added category
+    } catch (error) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  },
+);
+
 const categorySlice = createSlice({
   name: 'category',
   initialState: {
@@ -69,6 +72,7 @@ const categorySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Fetch Categories
       .addCase(fetchCategories.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -84,10 +88,14 @@ const categorySlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+
+      // Delete Category
       .addCase(deleteCategory.fulfilled, (state, action) => {
         state.categories = state.categories.filter((cat) => cat._id !== action.payload);
         state.total -= 1;
       })
+
+      // Update Category
       .addCase(updateCategory.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -101,6 +109,20 @@ const categorySlice = createSlice({
         }
       })
       .addCase(updateCategory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(addCategoryThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addCategoryThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.categories.push(action.payload);
+        state.total += 1;
+      })
+      .addCase(addCategoryThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

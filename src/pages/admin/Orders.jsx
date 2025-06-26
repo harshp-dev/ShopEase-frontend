@@ -23,7 +23,6 @@ function Orders() {
     dispatch(fetchOrdersForAdmin({ page: page + 1, limit: rowsPerPage }));
   }, [dispatch, page, rowsPerPage]);
 
-  // Transform orders data for display
   const transformedOrders = useMemo(() => {
     return orders.map((order) => ({
       ...order,
