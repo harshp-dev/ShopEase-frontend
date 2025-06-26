@@ -9,6 +9,7 @@ import {
   Paper,
   TablePagination,
   Box,
+  Typography,
 } from '@mui/material';
 import Button from './Button';
 import LoadingSpinner from './LoadingSpinner';
@@ -81,6 +82,16 @@ const DataTable = ({
     return <LoadingSpinner />;
   }
 
+  const renderEmptyState = () => (
+    <TableRow>
+      <TableCell colSpan={columns.length} sx={{ textAlign: 'center', py: 4 }}>
+        <Typography variant="h6" color="textSecondary">
+          Nothing to display
+        </Typography>
+      </TableCell>
+    </TableRow>
+  );
+
   return (
     <Paper elevation={2}>
       <TableContainer>
@@ -95,13 +106,15 @@ const DataTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, rowIndex) => (
-              <TableRow key={row._id || rowIndex}>
-                {columns.map((col) => (
-                  <TableCell key={col.field}>{renderCellContent(row, col)}</TableCell>
+            {rows.length === 0
+              ? renderEmptyState()
+              : rows.map((row, rowIndex) => (
+                  <TableRow key={row._id || rowIndex}>
+                    {columns.map((col) => (
+                      <TableCell key={col.field}>{renderCellContent(row, col)}</TableCell>
+                    ))}
+                  </TableRow>
                 ))}
-              </TableRow>
-            ))}
           </TableBody>
         </Table>
       </TableContainer>
