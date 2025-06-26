@@ -6,7 +6,6 @@ import {
   addCategory,
 } from '../../services/CategoryService';
 
-// Fetch categories
 export const fetchCategories = createAsyncThunk(
   'category/fetchCategories',
   async ({ page = 1, limit = 10, search = '' }, thunkAPI) => {
@@ -18,7 +17,6 @@ export const fetchCategories = createAsyncThunk(
   },
 );
 
-// Delete category
 export const deleteCategory = createAsyncThunk(
   'category/deleteCategoryById',
   async (id, thunkAPI) => {
@@ -31,7 +29,6 @@ export const deleteCategory = createAsyncThunk(
   },
 );
 
-// Update category
 export const updateCategory = createAsyncThunk(
   'category/updateCategory',
   async ({ id, data }, { rejectWithValue }) => {
@@ -71,7 +68,6 @@ const categorySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Fetch Categories
       .addCase(fetchCategories.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -88,13 +84,11 @@ const categorySlice = createSlice({
         state.error = action.payload;
       })
 
-      // Delete Category
       .addCase(deleteCategory.fulfilled, (state, action) => {
         state.categories = state.categories.filter((cat) => cat._id !== action.payload);
         state.total -= 1;
       })
 
-      // Update Category
       .addCase(updateCategory.pending, (state) => {
         state.loading = true;
         state.error = null;
