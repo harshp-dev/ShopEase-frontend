@@ -33,6 +33,10 @@ const CategoryProduct = () => {
   }, [search, categoryName, dispatch]);
   return (
     <Box sx={{ p: 3 }}>
+      <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
+        {categoryName} Products
+      </Typography>
+
       <Box sx={{ width: 200 }}>
         <InputField
           name="search"
