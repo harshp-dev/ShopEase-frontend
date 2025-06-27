@@ -1,23 +1,25 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Typography,
-  Button,
   Chip,
   Divider,
   Stack,
   TextField,
   IconButton,
+  CircularProgress,
 } from '@mui/material';
 import { ShoppingCart, Inventory, Add, Remove } from '@mui/icons-material';
-import { addItemToCart } from '../../redux/slices/cart';
 import { useDispatch } from 'react-redux';
-import LoadingSpinner from '../common/LoadingSpinner';
+import { addItemToCart } from '../../redux/slices/cart';
+import Button from '../common/Button';
 
 const ProductInfo = ({ product }) => {
   const [addingToCart, setAddingToCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleAddToCart = async () => {
     try {
@@ -34,130 +36,131 @@ const ProductInfo = ({ product }) => {
     setQuantity((prev) => Math.max(1, Math.min(prev + num, product.stock)));
   };
 
+  const handleViewCart = () => {
+    navigate('/user/cart');
+  };
+
   const isInStock = product.stock > 0;
 
   return (
-    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+      {/* Product Title */}
       <Typography
-        variant="h3"
+        variant="h4"
         component="h1"
-        sx={{
-          fontSize: { xs: '1.75rem', sm: '2.25rem', md: '2.5rem' },
-          fontWeight: 700,
-          mb: 2,
-          lineHeight: 1.2,
-          color: 'text.primary',
-        }}
+        sx={{ fontWeight: 700, color: '#154360', lineHeight: 1.3 }}
       >
         {product.name}
       </Typography>
 
-      <Typography
-        variant="h4"
-        sx={{
-          fontSize: { xs: '1.5rem', sm: '2rem', md: '2.25rem' },
-          fontWeight: 600,
-          color: 'primary.main',
-          mb: 3,
-        }}
-      >
-        ₹{product.price.toFixed(2)}
-      </Typography>
+      {/* Price */}
+      <Stack direction="row" spacing={2} alignItems="center">
+        <Typography variant="h5" color="primary" sx={{ fontWeight: 600 }}>
+          ₹{product.price.toLocaleString()}
+        </Typography>
+        {product.originalPrice && product.originalPrice > product.price && (
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{ textDecoration: 'line-through' }}
+          >
+            ₹{product.originalPrice.toLocaleString()}
+          </Typography>
+        )}
+      </Stack>
 
-      <Stack direction="row" spacing={1} mb={3}>
+      {/* Category and Stock Status */}
+      <Stack direction="row" spacing={1}>
         <Chip
-          label={product.category?.name || 'N/A'}
-          variant="outlined"
+          label={product.category?.name || 'Uncategorized'}
           color="primary"
-          size="medium"
+          variant="outlined"
         />
         <Chip
           label={isInStock ? 'In Stock' : 'Out of Stock'}
           color={isInStock ? 'success' : 'error'}
           variant="filled"
-          size="medium"
         />
       </Stack>
 
-      <Divider sx={{ mb: 3 }} />
+      <Divider />
 
-      <Typography
-        variant="body1"
-        sx={{
-          fontSize: { xs: '1rem', sm: '1.1rem' },
-          lineHeight: 1.7,
-          color: 'text.secondary',
-          mb: 3,
-          flex: 1,
-        }}
-      >
+      {/* Description */}
+      <Typography variant="body1" color="text.secondary" sx={{ lineHeight: 1.7 }}>
         {product.description}
       </Typography>
 
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+      {/* Stock Units */}
+      <Stack direction="row" spacing={1} alignItems="center">
         <Inventory fontSize="small" color="action" />
-        <Typography
-          variant="body2"
-          sx={{
-            ml: 1,
-            fontSize: '1rem',
-            color: 'text.secondary',
-          }}
-        >
+        <Typography variant="body2" color="text.secondary">
           {product.stock} units available
         </Typography>
-      </Box>
+      </Stack>
 
+      {/* Quantity Selector */}
       {isInStock && (
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-          <Typography variant="body1" sx={{ mr: 2, fontWeight: 500 }}>
+        <Stack direction="row" spacing={2} alignItems="center" sx={{ mt: 1 }}>
+          <Typography variant="body1" fontWeight={500}>
             Quantity:
           </Typography>
-          <IconButton
-            onClick={() => handleQuantityChange(-1)}
-            disabled={quantity <= 1}
-            size="medium"
-            sx={{ border: 1, borderColor: 'grey.300' }}
-          >
+          <IconButton onClick={() => handleQuantityChange(-1)} disabled={quantity <= 1}>
             <Remove />
           </IconButton>
           <TextField
-            value={quantity}
             type="number"
             size="small"
+            value={quantity}
             inputProps={{ min: 1, max: product.stock }}
-            sx={{ width: 80, mx: 1 }}
-            onChange={(e) => setQuantity(Math.min(Number(e.target.value) || 1, product.stock))}
+            onChange={(e) =>
+              setQuantity(Math.min(Math.max(1, Number(e.target.value) || 1), product.stock))
+            }
+            sx={{ width: 60 }}
           />
-          <IconButton
-            onClick={() => handleQuantityChange(1)}
-            disabled={quantity >= product.stock}
-            size="medium"
-            sx={{ border: 1, borderColor: 'grey.300' }}
-          >
+          <IconButton onClick={() => handleQuantityChange(1)} disabled={quantity >= product.stock}>
             <Add />
           </IconButton>
-        </Box>
+        </Stack>
       )}
 
-      <Button
-        variant="contained"
-        size="large"
-        fullWidth
-        onClick={handleAddToCart}
-        disabled={!isInStock || addingToCart}
-        startIcon={addingToCart ? <LoadingSpinner /> : <ShoppingCart />}
-        sx={{
-          py: 1.5,
-          fontSize: '1.1rem',
-          fontWeight: 600,
-          textTransform: 'none',
-          borderRadius: 2,
-          mt: 'auto',
-        }}
-      >
-        {addingToCart ? 'Adding...' : isInStock ? 'Add to Cart' : 'Out of Stock'}
-      </Button>
+      {/* Add to Cart and View Cart Buttons */}
+      <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
+        <Button
+          label={
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              {addingToCart ? <CircularProgress size={20} color="inherit" /> : <ShoppingCart />}
+              {addingToCart ? 'Adding to Cart...' : 'Add to Cart'}
+            </Box>
+          }
+          variant="contained"
+          onClick={handleAddToCart}
+          disabled={!isInStock || addingToCart}
+          sx={{
+            py: 1.5,
+            fontWeight: 600,
+            textTransform: 'none',
+            borderRadius: 2,
+            flex: 1,
+            '&.Mui-disabled': {
+              backgroundColor: 'primary.main',
+              opacity: 0.6,
+              color: 'white',
+            },
+          }}
+        />
+        <Button
+          label="View Cart"
+          variant="outlined"
+          onClick={handleViewCart}
+          sx={{
+            py: 1.5,
+            fontWeight: 600,
+            textTransform: 'none',
+            borderRadius: 2,
+            flex: 1,
+          }}
+        />
+      </Box>
     </Box>
   );
 };
