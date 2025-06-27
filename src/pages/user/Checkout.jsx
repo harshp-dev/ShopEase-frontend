@@ -79,7 +79,6 @@ const Checkout = () => {
         </Typography>
       ) : (
         <Box display="grid" gridTemplateColumns={{ xs: '1fr', md: '1fr 1fr' }} gap={4}>
-          {/* Left - Cart Details */}
           <Paper variant="outlined" sx={{ p: 3 }}>
             <Typography variant="h6" gutterBottom>
               Cart Items
