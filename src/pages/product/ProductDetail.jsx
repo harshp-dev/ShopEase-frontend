@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Container, Grid, Card, CardContent, Alert, Button, Fade, Box } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { getProductById } from '../../services/ProductService.js';
@@ -9,7 +9,6 @@ import LoadingSpinner from '../../components/common/LoadingSpinner';
 
 const ProductDetailPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -41,7 +40,7 @@ const ProductDetailPage = () => {
     return (
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Button
-          onClick={() => navigate('/products')}
+          onClick={() => window.history.back()}
           startIcon={<ArrowBack />}
           sx={{ mb: 3, textTransform: 'none' }}
         >
@@ -58,7 +57,7 @@ const ProductDetailPage = () => {
     return (
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Button
-          onClick={() => navigate('/products')}
+          onClick={() => window.history.back()}
           startIcon={<ArrowBack />}
           sx={{ mb: 3, textTransform: 'none' }}
         >
@@ -74,7 +73,7 @@ const ProductDetailPage = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Button
-        onClick={() => navigate('/products')}
+        onClick={() => window.history.back()}
         startIcon={<ArrowBack />}
         sx={{ mb: 3, textTransform: 'none' }}
       >
