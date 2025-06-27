@@ -13,7 +13,7 @@ import Products from '../pages/admin/Products';
 import Orders from '../pages/admin/Orders';
 import Categories from '../pages/admin/Categories';
 import ShopPage from '../pages/user/ShopPage';
-import OrdersPage from '../pages/user/OrdersPage';
+import Checkout from '../pages/user/Checkout';
 import CartPage from '../pages/user/CartPage';
 import UserLayout from '../pages/user/UserLayout';
 import RestrictedRoute from './RestrictedRoute';
@@ -49,9 +49,10 @@ const AppRoutes = () => {
         <Route path="/user" element={<UserLayout />}>
           <Route index element={<UserDashboard />} />
           <Route path="shop" element={<ShopPage />} />
-          <Route path="orders" element={<OrdersPage />} />
+          {/* <Route path="orders" element={<OrdersPage />} /> */}
           <Route path="cart" element={<CartPage />} />
           <Route path="category/:categoryName" element={<CategoryProduct />} />
+          <Route path="checkout" element={<Checkout />} />
         </Route>
       </Route>
 

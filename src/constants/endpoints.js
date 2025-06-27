@@ -30,6 +30,7 @@ export const endpoints = {
     ADD_TO_CART: '/cart',
     UPDATE_CART_ITEM: '/cart',
     REMOVE_CART_ITEM: '/cart',
+    CLEAR_CART: '/cart/clear',
   },
   ORDER: {
     ADD_ORDER: '/order/add',

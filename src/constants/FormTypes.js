@@ -8,6 +8,7 @@ import {
   editCategorySchema,
 } from '../schema/authSchema';
 import { addProductSchema, editProductSchema } from '../schema/productSchema';
+import { checkoutSchema } from '../schema/checkoutSchema';
 
 export const FormTypes = {
   login: {
@@ -153,5 +154,16 @@ export const FormTypes = {
     ],
     Schema: editCategorySchema,
     submitButtonLabel: 'Update Category',
+  },
+  checkout: {
+    fields: [
+      { name: 'address.street', label: 'Street', type: 'text' },
+      { name: 'address.city', label: 'City', type: 'text' },
+      { name: 'address.state', label: 'State', type: 'text' },
+      { name: 'address.zip', label: 'Zip Code', type: 'text' },
+      { name: 'mobileNo', label: 'Mobile Number', type: 'text' },
+    ],
+    Schema: checkoutSchema,
+    submitButtonLabel: 'Place Order',
   },
 };
