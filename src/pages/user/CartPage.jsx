@@ -82,10 +82,9 @@ const CartPage = () => {
           <Typography variant="h6" mt={5}>
             Total Price: ₹{totalPrice}
           </Typography>
-
           <Button
             label="Proceed to Checkout"
-            onClick={() => navigate('/checkout')}
+            onClick={() => navigate('/user/checkout')}
             sx={{ mt: 4 }}
           />
         </>
