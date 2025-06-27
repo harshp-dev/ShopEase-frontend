@@ -20,7 +20,6 @@ import RestrictedRoute from './RestrictedRoute';
 import ProductDetails from '../pages/product/ProductDetail';
 import UserDashboard from '../pages/user/UserDashboard';
 import PageNotFound from '../pages/NotFound';
-import CategoryProduct from '../pages/user/CategoryProduct';
 
 const AppRoutes = () => {
   return (
@@ -51,15 +50,12 @@ const AppRoutes = () => {
           <Route path="shop" element={<ShopPage />} />
           <Route path="orders" element={<OrdersPage />} />
           <Route path="cart" element={<CartPage />} />
-          <Route path="category/:categoryName" element={<CategoryProduct />} />
         </Route>
       </Route>
-
       {/* <Route element={<ProtectedRoute />}> */}
       <Route path="/admin" element={<AdminDashboard />} />
 
       {/* </Route> */}
-
       <Route path="/product/:id" element={<ProductDetails />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
