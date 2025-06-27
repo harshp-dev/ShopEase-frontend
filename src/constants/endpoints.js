@@ -31,4 +31,9 @@ export const endpoints = {
     UPDATE_CART_ITEM: '/cart',
     REMOVE_CART_ITEM: '/cart',
   },
+  ORDER: {
+    ADD_ORDER: '/order/add',
+    GET_ALL_ORDERS: '/order/orderall',
+    GET_USER_ORDERS: '/order/orderlist',
+  },
 };

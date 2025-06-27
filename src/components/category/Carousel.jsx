@@ -1,11 +1,13 @@
 import { useRef, useState } from 'react';
 import Slider from 'react-slick';
-import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Arrow from './Arrow';
+import { useNavigate } from 'react-router-dom';
 
 const Carousel = ({ items, imageKey, titleKey, slidesToShow }) => {
+  const navigate = useNavigate();
   const sliderRef = useRef(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -35,41 +37,49 @@ const Carousel = ({ items, imageKey, titleKey, slidesToShow }) => {
     responsive: [
       {
         breakpoint: 960,
-        settings: { slidesToShow: 2 },
+        settings: { slidesToShow: 5 },
       },
       {
         breakpoint: 600,
-        settings: { slidesToShow: 1 },
+        settings: { slidesToShow: 3 },
       },
     ],
   };
 
   return (
-    <Box sx={{ maxWidth: '100%', p: 2, position: 'relative' }}>
+    <Box sx={{ maxWidth: '100%', p: 2 }}>
       <Slider ref={sliderRef} {...settings}>
         {items.map((item) => (
-          <Card
+          <Box
+            onClick={() => navigate(`category/${item[titleKey]}`)}
             key={item._id}
             sx={{
-              borderRadius: 2,
-              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyItems: 'center',
+              alignItems: 'center',
               width: 160,
-              height: 250,
               mx: 'auto',
+              cursor: 'pointer',
             }}
           >
-            <CardMedia
+            <Box
               component="img"
-              image={item[imageKey]}
+              src={item[imageKey]}
               alt={item[titleKey]}
-              sx={{ height: 180, width: '100%', objectFit: 'cover' }}
+              sx={{
+                width: 80,
+                height: 80,
+                borderRadius: '50%',
+                objectFit: 'cover',
+                border: '1px solid #ccc',
+                mb: 1,
+              }}
             />
-            <CardContent sx={{ textAlign: 'center', py: 0.5 }}>
-              <Typography variant="subtitle2" fontWeight={500}>
-                {item[titleKey]}
-              </Typography>
-            </CardContent>
-          </Card>
+            <Typography variant="subtitle2" fontWeight={700} letterSpacing={1}>
+              {item[titleKey]}
+            </Typography>
+          </Box>
         ))}
       </Slider>
     </Box>

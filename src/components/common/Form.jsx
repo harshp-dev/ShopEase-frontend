@@ -1,12 +1,14 @@
-import { Stack } from '@mui/material';
+import { CircularProgress, Stack } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { FormTypes } from '../../constants/formTypes';
 import Button from './Button';
 import InputField from './InputField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 const Form = ({ type, onSubmit, defaultValues = {} }) => {
+  const [loading, setLoading] = useState(false);
   const formConfig = FormTypes[type];
   const {
     register,
@@ -23,9 +25,14 @@ const Form = ({ type, onSubmit, defaultValues = {} }) => {
     label: cat.name,
   }));
 
-  const handleFormSubmit = (data) => {
+  const handleFormSubmit = async (data) => {
     if (onSubmit) {
-      onSubmit(data);
+      setLoading(true);
+      try {
+        await onSubmit(data);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -47,7 +54,11 @@ const Form = ({ type, onSubmit, defaultValues = {} }) => {
             defaultValue={defaultValues[field.name] || ''}
           />
         ))}
-        <Button type="submit" label={formConfig.submitButtonLabel} />
+        {!loading ? (
+          <Button type="submit" label={formConfig.submitButtonLabel} />
+        ) : (
+          <Button type="submit" label={<CircularProgress />} disabled="true" />
+        )}
       </Stack>
     </form>
   );
