@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogTitle, DialogActions, Typography } from '@mui/material';
+import { Dialog, DialogContent, DialogTitle, DialogActions, Typography, Box } from '@mui/material';
 import Form from './Form';
 import Button from './Button';
 
@@ -20,11 +20,13 @@ const Modal = ({
 
   return (
     <>
-      <Dialog open={open} onClose={onClose}>
-        <DialogTitle> {title}</DialogTitle>
+      <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+        <DialogTitle sx={{ fontWeight: 600, fontSize: '1.25rem' }}> {title}</DialogTitle>
         <DialogContent>
           {mode === 'form' && (
-            <Form type={type} defaultValues={initialData} onSubmit={handleFormSubmit} />
+            <Box sx={{ mt: 1 }}>
+              <Form type={type} defaultValues={initialData} onSubmit={handleFormSubmit} />
+            </Box>
           )}
 
           {mode === 'confirm' && <Typography>{confirmMessage}</Typography>}

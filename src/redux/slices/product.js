@@ -120,7 +120,7 @@ const productSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(updateProduct.pending, (state) => {
-        state.loading = true;
+        state.loading = false;
         state.error = null;
       })
       .addCase(updateProduct.fulfilled, (state, action) => {
@@ -144,10 +144,6 @@ const productSlice = createSlice({
       })
       .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload.products || [];
-        state.total = action.payload.totalCount;
-        state.page = action.payload.currentPage;
-        state.pages = action.payload.totalPages;
         const category = action.meta.arg.category;
         state.productsByCategory[category] = {
           items: action.payload.products || [],

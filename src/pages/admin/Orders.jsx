@@ -21,12 +21,12 @@ function Orders() {
 
   useEffect(() => {
     dispatch(fetchOrdersForAdmin({ page: page + 1, limit: rowsPerPage }));
-  }, [dispatch, page, rowsPerPage]);
+  }, [page, rowsPerPage]);
 
   const transformedOrders = useMemo(() => {
     return orders.map((order) => ({
       ...order,
-      orderId: order._id?.slice(-8) || 'N/A',
+      orderId: order._id || 'N/A',
       customer: (
         <Box>
           <Typography variant="body2" fontWeight="bold">
