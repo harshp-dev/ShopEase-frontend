@@ -12,7 +12,7 @@ const OrdersPage = () => {
 
   const { orders, totalOrders, loading } = useSelector((state) => state.order);
 
-  // Fetch user's orders on page/limit change
+  // fetch user page/limit
   useEffect(() => {
     dispatch(fetchUserOrders({ page: localPage + 1, limit: rowsPerPage }));
   }, [dispatch, localPage, rowsPerPage]);
@@ -20,7 +20,6 @@ const OrdersPage = () => {
   const customizedColumns = useMemo(() => {
     return ColumnTypes.orders
       .filter((col) => {
-        // 🧠 Skip 'customer' and 'mobileNumber' columns if user is not admin
         if (!user?.isAdmin && ['customer', 'mobileNumber'].includes(col.field)) {
           return false;
         }
