@@ -5,6 +5,7 @@ const UserDashboard = () => {
   return (
     <>
       <Category />
+      <hr />
       <CategorySection />
     </>
   );

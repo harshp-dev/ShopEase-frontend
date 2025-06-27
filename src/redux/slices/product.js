@@ -120,7 +120,7 @@ const productSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(updateProduct.pending, (state) => {
-        state.loading = true;
+        state.loading = false;
         state.error = null;
       })
       .addCase(updateProduct.fulfilled, (state, action) => {

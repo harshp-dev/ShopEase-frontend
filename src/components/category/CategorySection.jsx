@@ -35,11 +35,6 @@ const CategorySection = () => {
       value: cat.name,
     })),
   ];
-  // useEffect(() => {
-  //   if (!categories || categories.length === 0) {
-  //     dispatch(fetchCategories({ page: 1, limit: 10 }));
-  //   }
-  // }, [dispatch]);
 
   useEffect(() => {
     if (!categories.length) {

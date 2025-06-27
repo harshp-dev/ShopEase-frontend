@@ -5,7 +5,7 @@ const SmallProductCard = ({ product }) => {
   return (
     <Card
       component={Link}
-      to={`/product/${product._id}`}
+      to={`/user/product/${product._id}`}
       sx={{
         width: 180,
         mx: 1,
