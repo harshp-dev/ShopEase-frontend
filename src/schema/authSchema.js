@@ -60,12 +60,3 @@ export const changePasswordSchema = yup.object({
     .oneOf([yup.ref('newPassword'), null], 'Passwords must match')
     .required('Confirm password is required'),
 });
-
-export const addCategorySchema = yup.object({
-  name: yup.string().required('Category name is required'),
-  image: yup.mixed().notRequired(),
-});
-export const editCategorySchema = yup.object({
-  name: yup.string().required('Category name is required'),
-  image: yup.mixed().notRequired(),
-});

@@ -35,7 +35,7 @@ export const addToCart = async (productId, quantity = 1) => {
 export const updateCartItem = async (productId, quantity) => {
   try {
     const res = await api.put(`${endpoints.CART.UPDATE_CART_ITEM}/${productId}`, { quantity });
-    showSuccessToast(res.data.message || 'Cart updated successfully!');
+    //showSuccessToast(res.data.message || 'Cart updated successfully!');
     return {
       items: res.data.cart.items,
       totalPrice: res.data.cart.totalPrice,
@@ -49,6 +49,19 @@ export const removeCartItem = async (productId) => {
   try {
     const res = await api.delete(`${endpoints.CART.REMOVE_CART_ITEM}/${productId}`);
     showSuccessToast(res.data.message || 'Item removed from cart');
+    return {
+      items: res.data.cart.items,
+      totalPrice: res.data.cart.totalPrice,
+    };
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+export const clearCart = async () => {
+  try {
+    const res = await api.delete(endpoints.CART.CLEAR_CART);
+    showSuccessToast(res.data.message || 'Order Placed Successfully');
     return {
       items: res.data.cart.items,
       totalPrice: res.data.cart.totalPrice,

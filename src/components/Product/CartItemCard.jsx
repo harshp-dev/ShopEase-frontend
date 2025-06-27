@@ -1,7 +1,7 @@
-import { Card, CardContent, CardMedia, Typography, IconButton, Stack } from '@mui/material';
-import { Add, Remove, Delete } from '@mui/icons-material';
+import { Add, Delete, Remove } from '@mui/icons-material';
+import { Card, CardContent, CardMedia, IconButton, Stack, Typography } from '@mui/material';
 
-const CartItemCard = ({ item, onIncrement, onDecrement }) => {
+const CartItemCard = ({ item, isCheckout = false, onIncrement, onDecrement }) => {
   const { product, quantity } = item;
 
   return (
@@ -9,21 +9,44 @@ const CartItemCard = ({ item, onIncrement, onDecrement }) => {
       <CardMedia
         component="img"
         sx={{ width: 120, height: 120, borderRadius: 1 }}
-        image={product.images[0]?.url}
+        image={product.images[0]?.url || 'https://via.placeholder.com/120'}
         alt={product.name}
       />
       <CardContent sx={{ flex: 1 }}>
-        <Typography variant="h6">{product.name}</Typography>
+        <Typography variant="h6">
+          {isCheckout && quantity > 1 ? `${quantity}x ${product.name}` : product.name}
+        </Typography>
         <Typography color="text.secondary">₹{product.price}</Typography>
         <Typography variant="body2" color="text.secondary">
-          {product.description}
+          {product.description || 'No description available'}
+        </Typography>
+        {!isCheckout && (
+          <Stack direction="row" alignItems="center" spacing={1} mt={1}>
+            <IconButton onClick={() => onDecrement(product._id)}>
+              {quantity > 1 ? <Remove /> : <Delete />}
+            </IconButton>
+            <Typography>{quantity}</Typography>
+            <IconButton onClick={() => onIncrement(product._id)}>
+              <Add />
+            </IconButton>
+          </Stack>
+        )}
+        <Typography variant="body1" fontWeight="bold" mt={1}>
+          Subtotal: ₹{product.price * quantity}
         </Typography>
         <Stack direction="row" alignItems="center" spacing={1} mt={1}>
-          <IconButton onClick={() => onDecrement(product._id)}>
+          <IconButton
+            onClick={() => onDecrement(product._id)}
+            sx={{ border: 1, borderColor: 'grey.400' }}
+          >
             {quantity > 1 ? <Remove /> : <Delete />}
           </IconButton>
           <Typography>{quantity}</Typography>
-          <IconButton onClick={() => onIncrement(product._id)}>
+          <IconButton
+            onClick={() => onIncrement(item.product._id)}
+            disabled={item.quantity >= item.product.stock}
+            sx={{ border: 1, borderColor: 'grey.400' }}
+          >
             <Add />
           </IconButton>
         </Stack>
