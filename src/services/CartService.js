@@ -61,7 +61,7 @@ export const removeCartItem = async (productId) => {
 export const clearCart = async () => {
   try {
     const res = await api.delete(endpoints.CART.CLEAR_CART);
-    showSuccessToast(res.data.message || 'Order Placed Successfully');
+    showSuccessToast('Order Placed Successfully');
     return {
       items: res.data.cart.items,
       totalPrice: res.data.cart.totalPrice,

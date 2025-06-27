@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 import { roles } from '../constants/constants';
-import LoadingSpinner from '../components/common/LoadingSpinner';
+// import LoadingSpinner from '../components/common/LoadingSpinner';
 
 const RestrictedRoute = () => {
   const { user, loading } = useSelector((state) => state.auth);
@@ -10,7 +10,7 @@ const RestrictedRoute = () => {
   const redirect = query.get('redirect') || '/';
 
   if (loading) {
-    return <LoadingSpinner />;
+    return <Outlet />;
   }
 
   if (user) {
