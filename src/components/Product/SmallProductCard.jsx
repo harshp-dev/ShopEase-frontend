@@ -7,10 +7,10 @@ const SmallProductCard = ({ product }) => {
       component={Link}
       to={`/user/product/${product._id}`}
       sx={{
-        width: 160,
+        width: 180,
         mx: 1,
         textDecoration: 'none',
-        borderRadius: '8px',
+        borderRadius: '10px',
         '&:hover': { boxShadow: 4 },
       }}
     >

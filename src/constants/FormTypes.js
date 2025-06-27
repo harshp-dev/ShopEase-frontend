@@ -4,10 +4,9 @@ import {
   forgotPasswordSchema,
   resetPasswordSchema,
   changePasswordSchema,
-  addCategorySchema,
-  editCategorySchema,
 } from '../schema/authSchema';
 import { addProductSchema, editProductSchema } from '../schema/productSchema';
+import { addCategorySchema, editCategorySchema } from '../schema/categorySchema';
 
 export const FormTypes = {
   login: {
