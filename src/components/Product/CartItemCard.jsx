@@ -22,11 +22,18 @@ const CartItemCard = ({ item, isCheckout = false, onIncrement, onDecrement }) =>
         </Typography>
         {!isCheckout && (
           <Stack direction="row" alignItems="center" spacing={1} mt={1}>
-            <IconButton onClick={() => onDecrement(product._id)}>
+            <IconButton
+              onClick={() => onDecrement(product._id)}
+              sx={{ border: 1, borderColor: 'grey.400' }}
+            >
               {quantity > 1 ? <Remove /> : <Delete />}
             </IconButton>
             <Typography>{quantity}</Typography>
-            <IconButton onClick={() => onIncrement(product._id)}>
+            <IconButton
+              onClick={() => onIncrement(item.product._id)}
+              disabled={item.quantity >= item.product.stock}
+              sx={{ border: 1, borderColor: 'grey.400' }}
+            >
               <Add />
             </IconButton>
           </Stack>
@@ -34,22 +41,6 @@ const CartItemCard = ({ item, isCheckout = false, onIncrement, onDecrement }) =>
         <Typography variant="body1" fontWeight="bold" mt={1}>
           Subtotal: ₹{product.price * quantity}
         </Typography>
-        <Stack direction="row" alignItems="center" spacing={1} mt={1}>
-          <IconButton
-            onClick={() => onDecrement(product._id)}
-            sx={{ border: 1, borderColor: 'grey.400' }}
-          >
-            {quantity > 1 ? <Remove /> : <Delete />}
-          </IconButton>
-          <Typography>{quantity}</Typography>
-          <IconButton
-            onClick={() => onIncrement(item.product._id)}
-            disabled={item.quantity >= item.product.stock}
-            sx={{ border: 1, borderColor: 'grey.400' }}
-          >
-            <Add />
-          </IconButton>
-        </Stack>
       </CardContent>
     </Card>
   );

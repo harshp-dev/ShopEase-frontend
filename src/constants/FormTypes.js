@@ -4,11 +4,10 @@ import {
   loginSchema,
   registerSchema,
   resetPasswordSchema,
-  addCategorySchema,
-  editCategorySchema,
 } from '../schema/authSchema';
 import { checkoutSchema } from '../schema/checkoutSchema';
 import { addProductSchema, editProductSchema } from '../schema/productSchema';
+import { addCategorySchema, editCategorySchema } from '../schema/categorySchema';
 
 export const FormTypes = {
   login: {
