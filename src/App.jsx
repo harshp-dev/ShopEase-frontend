@@ -34,7 +34,7 @@ const App = () => {
   return (
     <>
       <AppRoutes />
-      <ToastProvider position="top-right" autoClose={3000} hideProgressBar={false} />
+      <ToastProvider position="top-right" />
     </>
   );
 };
