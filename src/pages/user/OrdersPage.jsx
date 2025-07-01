@@ -7,12 +7,11 @@ import DataTable from '../../components/common/DataTable';
 const OrdersPage = () => {
   const dispatch = useDispatch();
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [localPage, setLocalPage] = useState(0); // 0-based for frontend pagination
+  const [localPage, setLocalPage] = useState(0);
   const { user } = useSelector((state) => state.auth);
 
   const { orders, totalOrders, loading } = useSelector((state) => state.order);
 
-  // Fetch user's orders on page/limit change
   useEffect(() => {
     dispatch(fetchUserOrders({ page: localPage + 1, limit: rowsPerPage }));
   }, [dispatch, localPage, rowsPerPage]);
@@ -20,7 +19,6 @@ const OrdersPage = () => {
   const customizedColumns = useMemo(() => {
     return ColumnTypes.orders
       .filter((col) => {
-        // 🧠 Skip 'customer' and 'mobileNumber' columns if user is not admin
         if (!user?.isAdmin && ['customer', 'mobileNumber'].includes(col.field)) {
           return false;
         }
