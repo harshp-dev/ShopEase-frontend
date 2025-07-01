@@ -7,11 +7,12 @@ import DataTable from '../../components/common/DataTable';
 const OrdersPage = () => {
   const dispatch = useDispatch();
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [localPage, setLocalPage] = useState(0);
+  const [localPage, setLocalPage] = useState(0); // 0-based for frontend pagination
   const { user } = useSelector((state) => state.auth);
 
   const { orders, totalOrders, loading } = useSelector((state) => state.order);
 
+  // fetch user page/limit
   useEffect(() => {
     dispatch(fetchUserOrders({ page: localPage + 1, limit: rowsPerPage }));
   }, [dispatch, localPage, rowsPerPage]);
@@ -38,7 +39,7 @@ const OrdersPage = () => {
           return {
             ...col,
             renderCell: (row) =>
-              ` ${row.address?.street}, ${row.address?.city}, ${row.address?.state} - ${row.address?.zip}`,
+              `${row.address?.street}, ${row.address?.city}, ${row.address?.state} - ${row.address?.zip}`,
           };
         }
 
